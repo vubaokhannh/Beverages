@@ -66,7 +66,8 @@ $router->add("/admin/orders", ["controller" => "OrderController", "action" => "i
 
 $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 
-$params = $router->match($path);
+$params = $router->match($path, $_SERVER['REQUEST_METHOD']);
+
 if ($params === false) {
     include './src/Views/Errors/404.php';
     exit;
@@ -98,4 +99,14 @@ if (!method_exists($controller, $action)) {
 }
 
 
-call_user_func_array([$controller, $action], []);
+$request = App\Framework\Request::createFromGlobal();
+$response = new App\Framework\Response();
+
+$id = isset($params['id']) ? $params['id'] : null;
+$action = isset($params['action']) ? $params['action'] : 'index';
+
+
+$controlllerObject = new $controller();
+$controlllerObject->setRequest($request);
+$controlllerObject->setResponse($response);
+$controlllerObject->$action($id);
