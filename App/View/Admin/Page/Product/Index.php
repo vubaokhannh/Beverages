@@ -38,15 +38,31 @@ class index extends BaseView
                 <div class="card">
                     <!-- <h5 class="card-header">Table Basic</h5> -->
                     <div class="card-header">
-                        <form action="/admin/products/search" method="get">
-                            <div class="input-group input-group-merge">
-                                <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
-                                <input type="text" class="form-control" name="keywords"
-                                    value="" placeholder="Tìm kiếm"
-                                    aria-label="Tìm kiếm" aria-describedby="basic-addon-search31" />
-                            </div>
+                        <div class="row">
+                        <div class="col-6">
+                            <form action="/admin/products/search" method="get">
+                                <div class="input-group input-group-merge">
+                                    <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+                                    <input type="text" class="form-control" name="keywords"
+                                        value="" placeholder="Tìm kiếm"
+                                        aria-label="Tìm kiếm" aria-describedby="basic-addon-search31" />
+                                </div>
 
-                        </form>
+                            </form>
+                        </div>
+                        <div class=" col-6 mb-3">
+                            <select
+                                class="form-select "
+                                name=""
+                                id="">
+                                <option selected>Lọc trạng thái</option>
+                                <option value="">Hoạt động</option>
+                                <option value="">Tạm dừng</option>
+                               
+                            </select>
+                        </div>
+                        </div>
+
                     </div>
                     <div class="table-responsive text-nowrap">
                         <table class="table">
@@ -60,29 +76,42 @@ class index extends BaseView
                                     <th>Tùy chỉnh</th>
                                 </tr>
                             </thead>
+
                             <tbody class="table-border-bottom-0">
-                                <tr>
+                                <?php
+                                foreach ($data['products'] as $item):
+                                ?>
+                                    <tr>
 
-                                    <td>1</td>
-                                    <td>Nước Cam </td>
-                                    <td>
-                                        <img src="" alt="Product" class="img-fluid" />
-                                    </td>
-                                    <td>299.990đ</td>
-                                    <td>
-                                        <span class="badge bg-label-primary me-1">Còn hàng</span>
-                                    </td>
-                                    <td>
-                                        <a href="/admin/products/edit" class="btn btn-sm btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-sm btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
-                                </tr>
+                                        <td><?= $item['id'] ?></td>
+                                        <td><?= $item['name'] ?> </td>
+                                        <td>
+                                            <img src="/public/uploads/products/<?= $item['img'] ?>" alt="Product" class="img-fluid" width="70px" height="70px" />
+                                        </td>
+                                        <td><?= number_format($item['price']) ?></td>
+
+                                        <td>
+                                            <?php if ($item['status'] == 1): ?>
+                                                <span class="badge bg-label-success me-1">Hoạt động</span>
+                                            <?php else: ?>
+                                                <span class="badge bg-label-danger me-1">Tạm dừng</span>
+                                            <?php endif; ?>
+
+                                        </td>
+                                        <td>
+                                            <a href="/admin/products/edit" class="btn btn-sm btn-primary">Sửa</a>
+                                            <a href="#" class="btn btn-sm btn-danger">Xóa</a>
+                                        </td>
+                                    </tr>
+                                    </tr>
 
 
-
+                                <?php
+                                endforeach;
+                                ?>
 
                             </tbody>
+
                         </table>
                     </div>
                 </div>

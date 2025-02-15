@@ -10,16 +10,28 @@ use App\View\Admin\Page\Product\Index;
 use App\View\Admin\Page\Product\Create;
 use App\View\Admin\Page\Product\Edit;
 
+use App\Framework\Controller;
+
+use App\Model\Product;
 
 
 
-class ProductController
+
+class ProductController extends Controller
 {
 
     public function index()
     {
+        $model = new Product();
+        $products = $model->findAll();
+
+        $data = [
+            'products' => $products,
+         
+        ];
+    
         Header::render();
-        Index::render();
+        Index::render($data);
         Footer::render();
     }
 
@@ -27,6 +39,10 @@ class ProductController
         Header::render();
         Create::render();
         Footer::render();
+    }
+
+    public function store(){
+        
     }
 
     public function edit(){

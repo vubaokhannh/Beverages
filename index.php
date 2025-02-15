@@ -10,7 +10,7 @@ use App\Route;
 $router = new Route();
 
 // client
-$router->add("/", ["controller" => "HomeController", "action" => "index"]);
+$router->add("/", ["controller" => "HomeController", "action" => "index"], "GET");
 
 $router->add("/about", ["controller" => "AboutController", "action" => "index"]);
 
