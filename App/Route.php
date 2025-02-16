@@ -2,100 +2,102 @@
 
 namespace App;
 
-use InvalidArgumentException;
-
 class Route
 {
-    private array $routes = [];
 
-    public function add(string $path, array $params, string $method = 'GET')
+    private static $routes = [];
+    public static function get($url, $controllerMethod)
     {
-        $this->routes[] = [
-            'path' => $path,
-            'params' => $params,
-            'method' => strtoupper($method)
-        ];
+        if ($_SERVER['REQUEST_METHOD'] == 'GET')
+            self::$routes[$url] = $controllerMethod;
+    }
+    public static function post($url, $controllerMethod)
+    {
+        if (isset($_POST['method']))
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['method'] == 'POST')
+                self::$routes[$url] = $controllerMethod;
+    }
+    public static function put($url, $controllerMethod)
+    {
+        if (isset($_POST['method']))
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['method'] == 'PUT')
+                self::$routes[$url] = $controllerMethod;
+    }
+    public static function delete($url, $controllerMethod)
+    {
+        if (isset($_POST['method']))
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['method'] == 'DELETE')
+                self::$routes[$url] = $controllerMethod;
     }
 
-    /**
-     * Hàm này kiểm tra đường dẫn và router path có giống nhau không
-     * @param string $path
-     * @param string $method
-     * @return array | false
-     */
-    public function match(string $path, string $method): array|bool
-    {
-        // Loại bỏ dấu / ở đầu và cuối
-        $path = trim($path, "/");
+public static function dispatch($uri)
+{
+    // echo "<pre>";
 
-        // Kiểm tra $this->routes có hợp lệ không
-        if (!is_array($this->routes)) {
-            throw new InvalidArgumentException("Routes must be an array");
-        }
+    // var_dump($uri);
 
-        foreach ($this->routes as $route) {
-            // Kiểm tra $route có hợp lệ không
-            if (
-                !isset($route['path']) ||
-                !isset($route['params']) ||
-                !is_array($route['params']) ||
-                !isset($route['method'])
-            ) {
-                continue; // Bỏ qua route không hợp lệ
-            }
+    if ($uri != '/') {
+        // tách thành mảng nếu có ? trên URL
+        $uri = explode('?', $uri);
+        $uri = $uri[0];
+        // cắt dấu / nếu xuất hiện ở cuối uri
+        $uri = rtrim($uri, '/');
 
-            // Kiểm tra phương thức HTTP
-            if (strtoupper($method) !== strtoupper($route['method'])) {
-                continue; // Bỏ qua nếu phương thức không khớp
-            }
+        // đảo ngược uri $reversedUri = 1/seirogetac/nimda/
+        $reversedUri = strrev($uri);
+        // var_dump($reversedUri);
+        // tách url thành mảng 2 phần tử cách nhau bằng dấu /
+        $parts = explode('/', $reversedUri, 2);
 
-            // Lấy pattern từ route
-            $pattern = $this->getPatternFromRoutePath($route['path']);
-            if (!$pattern) {
-                continue; // Bỏ qua nếu pattern không hợp lệ
-            }
-
-            // So khớp đường dẫn với pattern
-            if (preg_match($pattern, $path, $matches)) {
-                // Lọc các tham số có tên
-                $matches = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
-
-                // Gộp tham số từ matches và params mặc định
-                $params = array_merge($matches, $route['params']);
-
-                return $params;
-            }
-        }
-
-        // Không tìm thấy route phù hợp
-        return false;
+        // đảo ngược để lấy từng phần
+        // phần 1: /admin/categories/
+        $part1 = strrev($parts[1]);
+        // phần 2: 1 => ép thành kiểu int
+        $part2 = (int) strrev($parts[0]);
     }
 
-    private function getPatternFromRoutePath(string $route_path): string
-    {
-        // Loại bỏ dấu / ở đầu và cuối
-        $route_path = trim($route_path, "/");
 
-        // Tách đường dẫn thành các đoạn
-        $segments = explode("/", $route_path);
+    // kiểm tra $uri có trùng với route đã định nghĩa ko ?
+    if (array_key_exists($uri, self::$routes)) {
+        // Vd: GET /categories (lấy danh sách loại sản phẩm) => Route::get("/categories", "App\Controllers\Client\CategoryController@index");
+        // $uri = /categories
+        // self::$routes[$uri] = self::$routes['/categories'] = App\Controllers\Client\CategoryController@index
+        $controllerMethod = self::$routes[$uri];
 
-        // Xử lý từng đoạn
-        $segments = array_map(function (string $segment): string {
-            // Trường hợp {param}
-            if (preg_match("#^\{([a-z][a-z0-9]*)\}$#", $segment, $matches)) {
-                return "(?P<" . $matches[1] . ">[^/]+)";
-            }
+        // dùng list để gán giá trị cho biến $controller, $method khi tách $controllerMethod thành 2 phần
+        list($controller, $method) = explode("@", $controllerMethod);
 
-            // Trường hợp {param:pattern}
-            if (preg_match("#^\{([a-z][a-z0-9]*):(.+)\}$#", $segment, $matches)) {
-                return "(?P<" . $matches[1] . ">" . $matches[2] . ")";
-            }
+        // Vd: $controller = App\Controllers\Client\CategoryController
+        $controllerInstance = new $controller();
 
-            // Trường hợp mặc định: thoát các ký tự đặc biệt
-            return preg_quote($segment, '#');
-        }, $segments);
-
-        // Ghép các đoạn lại và trả về regex hoàn chỉnh
-        return "#^" . implode("/", $segments) . "$#";
+        // Vd: $method = index
+        $controllerMethod = $controllerInstance->$method();
     }
+    // kiểm tra $uri có trùng với route đã định nghĩa với id được truyền vào ? và $part2 sau khi ép kiểu int có null ko ?
+    elseif (array_key_exists($part1 . '/{id}', self::$routes) && $part2) {
+        // Vd: GET /categories/{id} (lấy chi tiết loại sản phẩm với category_id cụ thể) Route::get("/categories/{id}", "App\Controllers\Client\CategoryController@edit");
+        // Vd: Truy cập: 127.0.0.1:8080/categories/1 
+        // $uri = /categories/1 
+        // => $part1 = /categories, $part2 = 1
+        // gán giá trị cho biến $id
+        $id = $part2;
+
+        // $part1 . '/{id}' = /categories/{id} 
+        // self::$routes[$part1 . '/{id}'] = self::$routes['/categories/{id}'] = App\Controllers\Client\CategoryController@edit
+        $controllerMethod = self::$routes[$part1 . '/{id}'];
+
+        // dùng list để gán giá trị cho biến $controller, $method khi tách $controllerMethod thành 2 phần
+        list($controller, $method) = explode("@", $controllerMethod);
+
+        // Vd: $controller = App\Controllers\Client\CategoryController
+        $controllerInstance = new $controller();
+
+        // Vd: $method = edit($id) = edit(1)
+        $controllerMethod = $controllerInstance->$method($id);
+    }
+    // không khớp với route đã định nghĩa
+    else {
+        header('Location: /notfound');
+    }
+}
 }

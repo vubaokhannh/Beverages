@@ -27,7 +27,7 @@ class Create extends BaseView
                                 </div>
                             </div>
                             <div class="card-body pt-4">
-                                <form action="/admin/products" id="" method="POST" enctype="multipart/form-data">
+                                <form action="/admin/products/store" id="" method="POST" enctype="multipart/form-data">
                                     <input type="hidden" name="method" id="" value="POST">
                                     <div class="row g-6">
                                         <div class="col-md-12">

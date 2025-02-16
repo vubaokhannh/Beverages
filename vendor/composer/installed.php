@@ -3,7 +3,7 @@
         'name' => 'khanh/vubaokhanh_pc08901_asm_php2',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'f753836e651f8c53e251a62d6b34d232231223dd',
+        'reference' => '8fd60e94550f0586f334572efb3a962f98ae00b0',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'khanh/vubaokhanh_pc08901_asm_php2' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'f753836e651f8c53e251a62d6b34d232231223dd',
+            'reference' => '8fd60e94550f0586f334572efb3a962f98ae00b0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

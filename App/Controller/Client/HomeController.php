@@ -7,12 +7,11 @@ use App\View\Client\Layouts\Header;
 use App\View\Client\Page\Home;
 
 
-use App\Framework\Controller;
 
 
 
 
-class HomeController  extends Controller{
+class HomeController  {
     public function index() {
         Header::render();
         Home::render();

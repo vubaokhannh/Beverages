@@ -12,7 +12,7 @@ use App\View\Admin\Page\Product\Edit;
 
 use App\Framework\Controller;
 
-use App\Model\Product;
+use App\Models\Product;
 
 
 
@@ -23,33 +23,37 @@ class ProductController extends Controller
     public function index()
     {
         $model = new Product();
-        $products = $model->findAll();
+        $products = $model->getAll();
 
         $data = [
             'products' => $products,
-         
+
         ];
-    
+
         Header::render();
         Index::render($data);
         Footer::render();
     }
 
-    public function create(){
+    public function create()
+    {
+      
+
         Header::render();
         Create::render();
         Footer::render();
     }
 
-    public function store(){
+    public function store()
+    {
         
     }
 
-    public function edit(){
+
+    public function edit()
+    {
         Header::render();
         Edit::render();
         Footer::render();
     }
-
-
 }

@@ -9,11 +9,11 @@ use App\View\Admin\Layouts\Footer;
 
 use App\View\Admin\Page\Home;
 
-use App\Framework\Controller;
 
 
 
-class DashboardController extends Controller{
+
+class DashboardController {
 
     public function index() {
         Header::render();
