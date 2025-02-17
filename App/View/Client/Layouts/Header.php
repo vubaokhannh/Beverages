@@ -3,11 +3,14 @@
 namespace App\View\Client\Layouts;
 
 use App\View\BaseView;
+use App\Helpers\AuthHelper;
+
 
 class Header extends BaseView
 {
     public static function render($data = null)
     {
+        $is_login = AuthHelper::checkLogin();
 ?>
 
         <!DOCTYPE html>
@@ -131,9 +134,22 @@ class Header extends BaseView
                                             <li><a href="#">English</a></li>
                                         </ul>
                                     </div>
-                                    <div class="header__top__right__auth">
-                                        <a href="/login"><i class="fa fa-user"></i> Đăng nhập</a>
-                                    </div>
+                                    <?php
+                                    if ($is_login):
+                                    ?>
+                                        <div class="header__top__right__auth">
+                                            <a href="#"><i class="fa fa-user"></i> <?= $_SESSION['user']['name'] ?></a>
+                                        </div>
+                                    <?php
+                                    else:
+                                    ?>
+
+                                        <div class="header__top__right__auth">
+                                            <a href="/login"><i class="fa fa-user"></i> Đăng nhập</a>
+                                        </div>
+                                    <?php
+                                    endif;
+                                    ?>
                                 </div>
                             </div>
                         </div>

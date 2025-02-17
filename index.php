@@ -1,4 +1,5 @@
 <?php
+session_start();
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
@@ -28,7 +29,8 @@ Route::delete('/cart/delete', 'App\Controller\Client\CartController@deleteItem')
 Route::get('/checkout', 'App\Controller\Client\CheckoutController@checkout');
 
 
-
+Route::get('/login', 'App\Controller\Client\LoginController@Login');
+Route::post('/login', 'App\Controller\Client\LoginController@loginAction');
 
 
 // client
