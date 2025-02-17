@@ -151,7 +151,7 @@ class Header extends BaseView
                                 <ul>
                                     <li class="active"><a href="/">Trang chủ</a></li>
                                     <li><a href="/about">Giới thiệu</a></li>
-                                    <li><a href="/product">Sản phẩm</a>
+                                    <li><a href="/products">Sản phẩm</a>
                                         <!-- <ul class="header__menu__dropdown">
                                     <li><a href="./shop-details.html">Shop Details</a></li>
                                     <li><a href="./shoping-cart.html">Shoping Cart</a></li>

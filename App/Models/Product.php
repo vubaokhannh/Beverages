@@ -33,4 +33,9 @@ class Product extends BaseModel
     {
         return $this->delete($id);
     }
+
+    public function getOneProductByName($name)
+    {
+        return $this->getOneByName($name);
+    }
 }

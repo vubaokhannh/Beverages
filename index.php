@@ -14,7 +14,12 @@ $router = new Route();
 
 
 Route::get('/', 'App\Controller\Client\HomeController@index');
-Route::get('/products', 'App\Controllers\Client\ProductController@index');
+
+Route::get('/products', 'App\Controller\Client\ProductController@index');
+Route::get('/products/{id}', 'App\Controller\Client\ProductController@detail');
+
+
+
 
 // client
 // $router->add("/", ["controller" => "HomeController", "action" => "index"], "GET");
@@ -40,6 +45,13 @@ Route::get('/products', 'App\Controllers\Client\ProductController@index');
 Route::get('/admin', 'App\Controller\Admin\DashboardController@index');
 
 Route::get('/admin/products', 'App\Controller\Admin\ProductController@index');
+
+Route::get('/admin/products/create', 'App\Controller\Admin\ProductController@create');
+
+Route::post('/admin/products/store', 'App\Controller\Admin\ProductController@store');
+
+Route::get('/admin/products/edit', 'App\Controller\Admin\ProductController@edit');
+
 
 
 // // admin
