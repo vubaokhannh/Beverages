@@ -45,72 +45,59 @@ class Index extends BaseView
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="shoping__cart__item">
-                                            <img src="/public/assets/client/img/cart/cart-1.jpg" alt="">
-                                            <h5>Vegetable’s Package</h5>
-                                        </td>
-                                        <td class="shoping__cart__price">
-                                            $55.00
-                                        </td>
-                                        <td class="shoping__cart__quantity">
-                                            <div class="quantity">
-                                                <div class="pro-qty">
-                                                    <input type="text" value="1">
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="shoping__cart__total">
-                                            $110.00
-                                        </td>
-                                        <td class="shoping__cart__item__close">
-                                            <span class="icon_close"></span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="shoping__cart__item">
-                                            <img src="/public/assets/client/img/cart/cart-2.jpg" alt="">
-                                            <h5>Fresh Garden Vegetable</h5>
-                                        </td>
-                                        <td class="shoping__cart__price">
-                                            $39.00
-                                        </td>
-                                        <td class="shoping__cart__quantity">
-                                            <div class="quantity">
-                                                <div class="pro-qty">
-                                                    <input type="text" value="1">
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="shoping__cart__total">
-                                            $39.99
-                                        </td>
-                                        <td class="shoping__cart__item__close">
-                                            <span class="icon_close"></span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="shoping__cart__item">
-                                            <img src="/public/assets/client/img/cart/cart-3.jpg" alt="">
-                                            <h5>Organic Bananas</h5>
-                                        </td>
-                                        <td class="shoping__cart__price">
-                                            $69.00
-                                        </td>
-                                        <td class="shoping__cart__quantity">
-                                            <div class="quantity">
-                                                <div class="pro-qty">
-                                                    <input type="text" value="1">
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="shoping__cart__total">
-                                            $69.99
-                                        </td>
-                                        <td class="shoping__cart__item__close">
-                                            <span class="icon_close"></span>
-                                        </td>
-                                    </tr>
+                                    <?php
+                                    $total_price = 0;
+                                    $i = 0;
+                                    foreach ($data as $cart):
+                                        if ($cart['data']):
+                                            $unit_price = $cart['quantity'] * ($cart['data']['price']);
+                                            $total_price += $unit_price;
+                                            $i++;
+                                    ?>
+                                            <tr>
+                                                <td class="shoping__cart__item">
+                                                    <img src="/public/uploads/products/<?= $cart['data']['img'] ?>" alt="" width="70px">
+                                                    <h5><?= $cart['data']['name'] ?></h5>
+                                                </td>
+                                                <td class="shoping__cart__price">
+                                                    <?= number_format($cart['data']['price']) ?>
+                                                    VNĐ
+                                                </td>
+                                                <td class="shoping__cart__quantity">
+                                                    <div class="quantity">
+                                                        <div class="pro-qty">
+                                                            <form action="/cart/update" method="post">
+                                                                <input type="hidden" name="method" value="PUT">
+                                                                <input type="hidden" name="id" value="<?= $cart['data']['id'] ?>">
+                                                                <input type="hidden" name="update-cart-item">
+                                                                <div class="quantity-control">
+                                                                    <input type="button" class="dec qtybtn" value="-" onclick="decreaseQuantity(this)">
+                                                                    <input type="text" name="quantity" value="<?= $cart['quantity'] ?>"
+                                                                        onchange="this.form.submit()" min="1">
+                                                                    <input type="button" class="inc qtybtn" value="+" onclick="increaseQuantity(this)">
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+
+                                                </td>
+                                                <td class="shoping__cart__total">
+                                                    <?= number_format($unit_price) ?>
+                                                    VNĐ
+                                                </td>
+                                                <td class="shoping__cart__item__close">
+                                                    <form action="cart/delete" method="post">
+                                                        <input type="hidden" name="method" id="" value="DELETE">
+                                                        <input type="hidden" name="id" value="<?= $cart['data']['id'] ?>">
+                                                        <button type="submit" class="icon_close border-0"></button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                    <?php
+                                        endif;
+                                    endforeach;
+                                    ?>
+
                                 </tbody>
                             </table>
                         </div>
@@ -119,9 +106,8 @@ class Index extends BaseView
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="shoping__cart__btns">
-                            <a href="#" class="primary-btn cart-btn">TIẾP TỤC MUA SẮM</a>
-                            <a href="#" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
-                                Cập nhật giỏ hàng</a>
+                            <a href="/" class="primary-btn cart-btn">TIẾP TỤC MUA SẮM</a>
+
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -140,8 +126,8 @@ class Index extends BaseView
                         <div class="shoping__checkout">
                             <h5>Tổng số </h5>
                             <ul>
-                                <li>Tổng phụ <span>$454.98</span></li>
-                                <li>Tổng <span>$454.98</span></li>
+                                <!-- <li>Tổng phụ <span>$454.98</span></li> -->
+                                <li>Tổng <span><?= number_format($total_price) ?> VNĐ</span></li>
                             </ul>
                             <a href="/checkout" class="primary-btn">Thanh toán</a>
                         </div>

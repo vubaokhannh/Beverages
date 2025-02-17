@@ -20,6 +20,16 @@ Route::get('/products/{id}', 'App\Controller\Client\ProductController@detail');
 
 
 
+Route::get('/cart', 'App\Controller\Client\CartController@index');
+Route::post('/cart/add', 'App\Controller\Client\CartController@add');
+Route::put('/cart/update', 'App\Controller\Client\CartController@update');
+Route::delete('/cart/delete', 'App\Controller\Client\CartController@deleteItem');
+
+Route::get('/checkout', 'App\Controller\Client\CheckoutController@checkout');
+
+
+
+
 
 // client
 // $router->add("/", ["controller" => "HomeController", "action" => "index"], "GET");
