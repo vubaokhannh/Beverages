@@ -33,6 +33,12 @@ Route::get('/login', 'App\Controller\Client\LoginController@Login');
 Route::post('/login', 'App\Controller\Client\LoginController@loginAction');
 
 
+Route::get('/register', 'App\Controller\Client\RegisterController@register');
+Route::post('/register', 'App\Controller\Client\RegisterController@registerAction');
+
+
+
+
 // client
 // $router->add("/", ["controller" => "HomeController", "action" => "index"], "GET");
 

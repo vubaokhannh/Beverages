@@ -23,6 +23,7 @@ class User extends BaseModel
 
     public function createUser($data)
     {
+       
         return $this->create($data);
     }
     public function updateUser($id, $data)

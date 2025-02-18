@@ -46,14 +46,15 @@ class Login extends BaseView
                                     <input type="checkbox" class="form-check-input" id="exampleCheck1" name="remember">
                                     <label class="form-check-label" for="exampleCheck1">Ghi nhớ</label>
                                 </div>
-                                <div class="mb-3 text-center">
+                                <div class="mb-3">
                                     <a href="./forgot-password.html" class="text-decoration-none">Quên mật khẩu?</a>
-                                    <a href="/register" class="ml-2 text-decoration-none">Đăng ký</a>
+                                    <a href="/register" class="text-decoration-none">
+                                        Đăng ký</a>
                                 </div>
                                 <div class="text-center">
                                     <button type="submit" class="site-btn">Đăng nhập</button>
                                 </div>
-                                
+
                             </form>
                         </div>
                     </div>
