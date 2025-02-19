@@ -36,7 +36,7 @@ class Create extends BaseView
                                         </div>
                                         <div class="col-md-12">
                                             <label for="image" class="form-label">Ảnh <span class="text-danger"> *</span></label>
-                                            <input class="form-control" type="file" id="image" name="image" />
+                                            <input class="form-control" type="file" id="img" name="img" />
                                         </div>
                                         <div class="col-md-6">
                                             <label for="price" class="form-label">Giá gốc <span class="text-danger"> *</span></label>
@@ -48,18 +48,11 @@ class Create extends BaseView
                                                 <input type="text" id="discount_price" name="discount_price" class="form-control" />
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <label for="date" class="form-label">Ngày-tháng-năm <span class="text-danger"> *</span></label>
+                                        <div class="col-md-12">
+                                            <label for="date" class="form-label">Ngày tạo<span class="text-danger"> *</span></label>
                                             <input type="date" class="form-control" id="date" name="date" placeholder="Address" />
                                         </div>
-                                        <div class="col-md-6">
-                                            <label for="is_featured" class="form-label">Nổi bật</label>
-                                            <select id="is_featured" name="is_featured" class="select2 form-select">
-                                                <option value="">Chọn nổi bật</option>
-                                                <option value="1">Nổi bật </option>
-                                                <option value="0"> Không nổi bật </option>
-                                            </select>
-                                        </div>
+
                                         <div class="col-md-12">
                                             <label for="description" class="form-label">Mô tả <span class="text-danger"> *</span></label>
                                             <textarea class="form-control" type="text" id="description" rows="7" name="description"
@@ -84,7 +77,7 @@ class Create extends BaseView
                                                 <option value="">Chọn danh mục</option>
 
 
-                                                <option value=""></option>
+                                                <option value="1">1</option>
 
                                             </select>
                                         </div>

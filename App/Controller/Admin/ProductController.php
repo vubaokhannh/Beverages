@@ -19,6 +19,8 @@ use App\Validations\ProductValidation;
 use App\Framework\Controller;
 
 use App\Models\Product;
+use App\Models\Category;
+
 
 
 
@@ -54,28 +56,25 @@ class ProductController extends Controller
 
     public static function store()
     {
-       
+
         $is_valid = ProductValidation::create();
 
         if (!$is_valid) {
-            NotificationHelper::error('store_product', 'Thêm sản phẩm thất bại');
+            NotificationHelper::error('createvalidation', 'Thêm sản phẩm thất bại');
             header('location: /admin/products/create');
             exit;
         }
         $name = $_POST['name'];
-       
-        // Kiểm tra các tên có tồn tại hay chưa
+
         $product = new Product();
         $is_exist = $product->getOneProductByName($name);
 
         if ($is_exist) {
-            NotificationHelper::error('store_product2', 'Tên sản phẩm này đã tồn tại');
+            NotificationHelper::error('name_product', 'Tên sản phẩm này đã tồn tại');
             header('location: /admin/products/create');
             exit;
         }
 
-
-        // Thêm vào
         $data = [
             'name' => $name,
             'price' => $_POST['price'],
@@ -83,17 +82,16 @@ class ProductController extends Controller
             'description' => $_POST['description'],
             'short_description' => $_POST['short_description'],
             'date' => $_POST['date'],
-            'origin' => $_POST['origin'],
-            'is_featured' => $_POST['is_featured'],
             'status' => $_POST['status'],
             'category_id' => $_POST['category_id'],
         ];
         $is_upload = ProductValidation::updateImage();
-        //  var_dump($is_upload);
         if ($is_upload) {
-            $data['image'] = $is_upload;
+            $data['img'] = $is_upload;
         }
         $result = $product->createProduct($data);
+
+
 
         if ($result) {
             NotificationHelper::success('create_product', 'Thêm sản phẩm thành công');
@@ -107,10 +105,36 @@ class ProductController extends Controller
 
 
 
-    public function edit()
+    public static function edit(int $id)
     {
+
+        // $is_valid = ProductValidation::edit();
+
+        // if (!$is_valid) {
+        //     NotificationHelper::error('editvalidation', 'Cập nhật sản phẩm thất bại');
+        //     header('location: /admin/products/create');
+        //     exit;
+        // }
+
+        $product = new product();
+        $data_product = $product->getOneproduct($id);
+        
+        $category = new category();
+        $data_category = $category->getAllCategory();
+        if (!$data_product) {
+            NotificationHelper::error('edit_product', 'Không thể xem sản phẩm này!');
+            header('Location: /admin/products');
+        }
+        $data = [
+            'products' => $data_product,
+            'category' => $data_category,
+
+        ];
+
         Header::render();
-        Edit::render();
+        Notification::render();
+        NotificationHelper::unset();
+        Edit::render($data);
         Footer::render();
     }
 }
