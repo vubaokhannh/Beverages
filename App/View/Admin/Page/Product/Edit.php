@@ -27,8 +27,8 @@ class Edit extends BaseView
                                 </div>
                             </div>
                             <div class="card-body pt-4">
-                                <form action="/admin/products/store" id="" method="POST" enctype="multipart/form-data">
-                                    <input type="hidden" name="method" id="" value="POST">
+                                <form action="/admin/update/<?= $data['products']['id'] ?>" id="" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" name="method" id="" value="PUT">
                                     <div class="row g-6">
                                         <div class="col-md-12">
                                             <label for="name" class="form-label">Tên <span class="text-danger"> *</span></label>

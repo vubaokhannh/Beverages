@@ -103,18 +103,8 @@ class ProductController extends Controller
         }
     }
 
-
-
     public static function edit(int $id)
     {
-
-        // $is_valid = ProductValidation::edit();
-
-        // if (!$is_valid) {
-        //     NotificationHelper::error('editvalidation', 'Cập nhật sản phẩm thất bại');
-        //     header('location: /admin/products/create');
-        //     exit;
-        // }
 
         $product = new product();
         $data_product = $product->getOneproduct($id);
@@ -137,4 +127,55 @@ class ProductController extends Controller
         Edit::render($data);
         Footer::render();
     }
+
+    public static function update(int $id)
+    {
+        $is_valid = ProductValidation::edit();
+        if (!$is_valid) {
+            NotificationHelper::error('update_product', 'Cập nhật sản phẩm thất bại  !');
+            header("Location: /admin/products/$id");
+            exit();
+        }
+
+        $name = $_POST['name'];
+        $product = new product();
+        $is_exist = $product->getOneproductByName($name);
+
+        if ($is_exist && $is_exist['id'] != $id) {
+            NotificationHelper::error('update_product_name', 'Tên loại sản phẩm đã tồn tại!');
+            header("Location: /admin/products/$id");
+            exit();
+        }
+
+        $data = [
+            'name' => $name,
+            'price' => $_POST['price'],
+            'discount_price' => $_POST['discount_price'],
+            'description' => $_POST['description'],
+            'short_description' => $_POST['short_description'],
+            'date' => $_POST['date'],
+            'status' => $_POST['status'],
+            'category_id' => $_POST['category_id'],
+        ];
+
+        $is_upload = ProductValidation::updateImage();
+        if ($is_upload) {
+            $data['img'] = $is_upload;
+        }
+        $result = $product->updateProduct($id, $data);
+        if ($result) {
+            NotificationHelper::success('update_products', 'Cập nhật sản phẩm thành công!');
+            header('Location: /admin/products');
+        } else {
+            NotificationHelper::error('update_products', 'Cập nhật sản phẩm thất bại!');
+            header("Location: /admin/products/$id");
+        }
+    }
+
+
+
+   
+
+
+
 }
