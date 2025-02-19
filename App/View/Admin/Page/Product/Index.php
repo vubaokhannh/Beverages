@@ -99,7 +99,7 @@ class index extends BaseView
 
                                         </td>
                                         <td>
-                                            <a href="/admin/products/edit" class="btn btn-sm btn-primary">Sửa</a>
+                                            <a href="/admin/products/<?= $item['id'] ?> " class="btn btn-sm btn-primary">Sửa</a>
                                             <a href="#" class="btn btn-sm btn-danger">Xóa</a>
                                         </td>
                                     </tr>
