@@ -56,21 +56,35 @@ class Index extends BaseView
                                 </tr>
                             </thead>
                             <tbody class="table-border-bottom-0">
-                                <tr>
-                                    
-                                    <td>1</td>
-                                    <td>Trái cây</td>
-                                    <td>Mô tả loại sản phẩm 1</td>
-                                    <td>
-                                        <span class="badge bg-label-primary me-1">Hoạt động</span>
-                                    </td>
-                                    <td>
-                                    <a href="/admin/categories/edit" class="btn btn-sm btn-primary">Sửa</a>
-                                    <a href="#" class="btn btn-sm btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
-                                </tr>
-                                
+                                <?php
+                                foreach ($data['category'] as $item):
+
+                                ?>
+                                    <tr>
+
+                                        <td><?= $item['id'] ?></td>
+                                        <td><?= $item['name'] ?></td>
+                                        <td><?= $item['description'] ?></td>
+                                        <td>
+                                            <?php if ($item['status'] == 1): ?>
+                                                <span class="badge bg-label-success me-1">Hoạt động</span>
+                                            <?php else: ?>
+                                                <span class="badge bg-label-danger me-1">Tạm dừng</span>
+                                            <?php endif; ?>
+
+                                        </td>
+                                        <td>
+                                            <a href="/admin/categories/<?= $item['id'] ?>" class="btn btn-sm btn-primary">Sửa</a>
+                                            <form action="/admin/categories/delete/<?= $item['id'] ?>" method="post"
+                                                style="display: inline-block;">
+                                                <input type="hidden" name="method" value="DELETE" id="">
+                                                <button type="submit" class="btn btn-sm btn-danger">Xoá</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+
+
                             </tbody>
                         </table>
                     </div>

@@ -71,7 +71,18 @@ Route::post('/admin/products/store', 'App\Controller\Admin\ProductController@sto
 Route::get('/admin/products/{id}', 'App\Controller\Admin\ProductController@edit');
 Route::put('/admin/update/{id}', 'App\Controller\Admin\ProductController@update');
 Route::delete('/admin/products/delete/{id}', 'App\Controller\Admin\ProductController@delete');
+Route::get('/admin/products/search', 'App\Controller\Admin\ProductController@searchProduct');
 // *** Admin
+
+Route::get('/admin/categories', 'App\Controller\Admin\CategoryController@index');
+Route::get('/admin/categories/create', 'App\Controller\Admin\CategoryController@create');
+Route::post('/admin/categories/store', 'App\Controller\Admin\CategoryController@store');
+Route::get('/admin/categories/{id}', 'App\Controller\Admin\CategoryController@edit');
+Route::put('/admin/categories/update/{id}', 'App\Controller\Admin\CategoryController@update');
+Route::delete('/admin/categories/delete/{id}', 'App\Controller\Admin\CategoryController@delete');
+
+
+
 
 
 
