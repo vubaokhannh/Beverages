@@ -14,7 +14,7 @@ class Notification extends BaseView
 
                 <div class="alert alert-success alert-dismissible" id="eroor">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong><?= $value ?></strong>
+                    <h6><?= $value ?></h6>
                 </div>
 
         <?php
@@ -28,7 +28,7 @@ class Notification extends BaseView
         ?>
                 <div class="alert alert-danger alert-dismissible" id="eroor">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong><?= $value ?></strong>
+                    <h6><?= $value ?></h6>
                 </div>
 <?php
             endforeach;

@@ -27,11 +27,14 @@ Route::put('/cart/update', 'App\Controller\Client\CartController@update');
 Route::delete('/cart/delete', 'App\Controller\Client\CartController@deleteItem');
 
 Route::get('/checkout', 'App\Controller\Client\CheckoutController@checkout');
+Route::post('/order', 'App\Controller\Client\CheckoutController@order');
+
+
+
 
 
 Route::get('/login', 'App\Controller\Client\LoginController@Login');
 Route::post('/login', 'App\Controller\Client\LoginController@loginAction');
-
 
 Route::get('/register', 'App\Controller\Client\RegisterController@register');
 Route::post('/register', 'App\Controller\Client\RegisterController@registerAction');
