@@ -39,6 +39,8 @@ class ProductController extends Controller
         ];
 
         Header::render();
+        Notification::render();
+        NotificationHelper::unset();
         Index::render($data);
         Footer::render();
     }
@@ -108,7 +110,7 @@ class ProductController extends Controller
 
         $product = new product();
         $data_product = $product->getOneproduct($id);
-        
+
         $category = new category();
         $data_category = $category->getAllCategory();
         if (!$data_product) {
@@ -172,10 +174,17 @@ class ProductController extends Controller
         }
     }
 
+    public static function delete(int $id)
+    {
 
-
-   
-
-
-
+        $product = new Product();
+        $return = $product->deleteProduct($id);
+        if (!$return) {
+            NotificationHelper::error('delete_product', 'Xóa sản phẩm thất bại!');
+            header('Location: /admin/products');
+        } else {
+            NotificationHelper::success('delete_product', 'Xóa sản phẩm thành công!');
+            header('Location: /admin/products');
+        }
+    }
 }

@@ -39,28 +39,28 @@ class index extends BaseView
                     <!-- <h5 class="card-header">Table Basic</h5> -->
                     <div class="card-header">
                         <div class="row">
-                        <div class="col-6">
-                            <form action="/admin/products/search" method="get">
-                                <div class="input-group input-group-merge">
-                                    <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
-                                    <input type="text" class="form-control" name="keywords"
-                                        value="" placeholder="Tìm kiếm"
-                                        aria-label="Tìm kiếm" aria-describedby="basic-addon-search31" />
-                                </div>
+                            <div class="col-6">
+                                <form action="/admin/products/search" method="get">
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+                                        <input type="text" class="form-control" name="keywords"
+                                            value="" placeholder="Tìm kiếm"
+                                            aria-label="Tìm kiếm" aria-describedby="basic-addon-search31" />
+                                    </div>
 
-                            </form>
-                        </div>
-                        <div class=" col-6 mb-3">
-                            <select
-                                class="form-select "
-                                name=""
-                                id="">
-                                <option selected>Lọc trạng thái</option>
-                                <option value="">Hoạt động</option>
-                                <option value="">Tạm dừng</option>
-                               
-                            </select>
-                        </div>
+                                </form>
+                            </div>
+                            <div class=" col-6 mb-3">
+                                <select
+                                    class="form-select "
+                                    name=""
+                                    id="">
+                                    <option selected>Lọc trạng thái</option>
+                                    <option value="">Hoạt động</option>
+                                    <option value="">Tạm dừng</option>
+
+                                </select>
+                            </div>
                         </div>
 
                     </div>
@@ -88,7 +88,7 @@ class index extends BaseView
                                         <td>
                                             <img src="/public/uploads/products/<?= $item['img'] ?>" alt="Product" class="img-fluid" width="70px" height="70px" />
                                         </td>
-                                        <td><?= number_format($item['price']) ?></td>
+                                        <td><?= number_format($item['price']) ?> VNĐ</td>
 
                                         <td>
                                             <?php if ($item['status'] == 1): ?>
@@ -100,12 +100,14 @@ class index extends BaseView
                                         </td>
                                         <td>
                                             <a href="/admin/products/<?= $item['id'] ?> " class="btn btn-sm btn-primary">Sửa</a>
-                                            <a href="#" class="btn btn-sm btn-danger">Xóa</a>
+                                            <form action="/admin/products/delete/<?= $item['id'] ?>" method="post"
+                                                style="display: inline-block;">
+                                                <input type="hidden" name="method" value="DELETE" id="">
+                                                <button type="submit" class="btn btn-sm btn-danger">Xoá</button>
+                                            </form>
                                         </td>
                                     </tr>
                                     </tr>
-
-
                                 <?php
                                 endforeach;
                                 ?>

@@ -66,13 +66,12 @@ Route::post('/register', 'App\Controller\Client\RegisterController@registerActio
 Route::get('/admin', 'App\Controller\Admin\DashboardController@index');
 
 Route::get('/admin/products', 'App\Controller\Admin\ProductController@index');
-
 Route::get('/admin/products/create', 'App\Controller\Admin\ProductController@create');
-
 Route::post('/admin/products/store', 'App\Controller\Admin\ProductController@store');
-
 Route::get('/admin/products/{id}', 'App\Controller\Admin\ProductController@edit');
 Route::put('/admin/update/{id}', 'App\Controller\Admin\ProductController@update');
+Route::delete('/admin/products/delete/{id}', 'App\Controller\Admin\ProductController@delete');
+// *** Admin
 
 
 
