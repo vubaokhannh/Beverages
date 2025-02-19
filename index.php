@@ -82,6 +82,10 @@ Route::put('/admin/categories/update/{id}', 'App\Controller\Admin\CategoryContro
 Route::delete('/admin/categories/delete/{id}', 'App\Controller\Admin\CategoryController@delete');
 
 
+Route::get('/admin/users', 'App\Controller\Admin\UserController@index');
+
+
+
 
 
 

@@ -58,26 +58,43 @@ class index extends BaseView
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                            <tr>
+                            <?php
+                            foreach ($data['users'] as $item):
+                            ?>
+                                <tr>
 
-                                <td>Khanh</td>
-                                <td>
-                                    <img src="" alt="User" class="img-fluid rounded-circle" />
-                                </td>
-                                <td>Khanh@gmail.com</td>
-                                <td>0987654321</td>
-                                <td>KG</td>
-                                <td>
-                                    <span class="badge bg-label-primary me-1">Hoạt động</span>
-                                </td>
-                                <td>
-                                    <span class="badge bg-label-success me-1">Admin</span>
-                                </td>
-                                <td>
-                                    <a href="/admin/users/edit" class="btn btn-sm btn-primary">Sửa</a>
-                                    <a href="#" class="btn btn-sm btn-danger">Xóa</a>
-                                </td>
-                            </tr>
+                                    <td><?= $item['name'] ?></td>
+                                    <td>
+                                        <img src="/public/uploads/users/<?= $item['avatar'] ?>" alt="User" class="img-fluid rounded-circle" width="70px" />
+                                    </td>
+                                    <td><?= $item['email'] ?></td>
+                                    <td><?= $item['phone'] ?></td>
+                                    <td><?= $item['address'] ?></td>
+
+                                    <td>
+                                        <?php if ($item['status'] == 1): ?>
+                                            <span class="badge bg-label-success me-1">Hoạt động</span>
+                                        <?php else: ?>
+                                            <span class="badge bg-label-danger me-1">Tạm dừng</span>
+                                        <?php endif; ?>
+
+                                    </td>
+
+                                    <td>
+                                        <?php if ($item['role'] == 1): ?>
+                                            <span class="badge bg-label-secondary me-1">Quản trị</span>
+                                        <?php else: ?>
+                                            <span class="badge bg-label-danger me-1">Khách hàng</span>
+                                        <?php endif; ?>
+
+                                    </td>
+
+                                    <td>
+                                        <a href="/admin/users/edit" class="btn btn-sm btn-primary">Sửa</a>
+                                        <a href="#" class="btn btn-sm btn-danger">Xóa</a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
 
 
 
