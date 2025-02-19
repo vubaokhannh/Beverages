@@ -187,4 +187,32 @@ class ProductController extends Controller
             header('Location: /admin/products');
         }
     }
+
+    public function searchProduct()
+    {
+
+        $keyword = $_GET['keywords'] ?? '';
+        $keyword = trim($keyword);
+
+        if (empty($keyword)) {
+            $_SESSION['keywords'] = null;
+
+            $data = [];
+            Header::render();
+            Index::render($data);
+            Footer::render();
+            return;
+        }
+        $_SESSION['keywords'] = $keyword;
+        $product = new Product();
+        $products = $product->search($keyword);
+       
+        $data = [
+            'products' => $products,
+
+        ];
+        Header::render();
+        Index::render($data);
+        Footer::render();
+    }
 }

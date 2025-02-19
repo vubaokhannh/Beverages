@@ -38,4 +38,16 @@ class Product extends BaseModel
     {
         return $this->getOneByName($name);
     }
+
+    public function search($keyword)
+    {
+        $sql = "SELECT products.* , categories.name AS category_name 
+                FROM products
+                INNER JOIN categories ON products.category_id = categories.id
+                WHERE products.name REGEXP '$keyword' 
+                AND products.status = " . self::STATUS_ENABLE . "
+                AND categories.status = " . self::STATUS_ENABLE;
+        $result = $this->_conn->MySQLi()->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }
