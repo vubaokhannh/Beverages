@@ -28,17 +28,13 @@ class Create extends BaseView
                 </div>
               </div>
               <div class="card-body pt-4">
-                <form action="/admin/users" id="" method="POST" enctype="multipart/form-data">
+                <form action="/admin/users/store" id="" method="POST" enctype="multipart/form-data">
                   <input type="hidden" name="method" id="" value="POST">
                   <div class="row g-6">
                     <div class="col-md-12">
                       <label for="name" class="form-label">Họ và Tên <span class="text-danger"> *</span></label>
                       <input class="form-control" type="text" id="name" name="name" autofocus />
-                    </div>
-                    <div class="col-md-12">
-                      <label for="username" class="form-label">Tên đăng nhập<span class="text-danger"> *</span></label>
-                      <input class="form-control" type="text" id="username" name="username" autofocus />
-                    </div>
+                    </div>                  
                     <div class="col-md-12">
                       <label for="avatar" class="form-label">Ảnh đại diện<span class="text-danger"> *</span></label>
                       <input class="form-control" type="file" id="avatar" name="avatar" />

@@ -43,7 +43,7 @@ class User extends BaseModel
     {
         return $this->countTotal();
     }
-    public function getOneUserByUsername(string $email)
+    public function getOneUserByEmail(string $email)
     {
         $result = [];
         try {

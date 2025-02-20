@@ -83,6 +83,9 @@ Route::delete('/admin/categories/delete/{id}', 'App\Controller\Admin\CategoryCon
 
 
 Route::get('/admin/users', 'App\Controller\Admin\UserController@index');
+Route::get('/admin/users/create', 'App\Controller\Admin\UserController@create');
+Route::post('/admin/users/store', 'App\Controller\Admin\UserController@store');
+
 
 
 
