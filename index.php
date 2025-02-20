@@ -40,29 +40,6 @@ Route::get('/register', 'App\Controller\Client\RegisterController@register');
 Route::post('/register', 'App\Controller\Client\RegisterController@registerAction');
 
 
-
-
-// client
-// $router->add("/", ["controller" => "HomeController", "action" => "index"], "GET");
-
-// $router->add("/about", ["controller" => "AboutController", "action" => "index"]);
-
-// $router->add("/product", ["controller" => "ProductController", "action" => "index"]);
-// $router->add("/product/detail", ["controller" => "ProductController", "action" => "detail"]);
-
-// $router->add("/post", ["controller" => "PostController", "action" => "index"]);
-// $router->add("/post/detail", ["controller" => "PostController", "action" => "detail"]);
-
-// $router->add("/contact", ["controller" => "ContactController", "action" => "index"]);
-
-// $router->add("/cart", ["controller" => "CartController", "action" => "index"]);
-
-// $router->add("/checkout", ["controller" => "CheckoutController", "action" => "index"]);
-
-// $router->add("/login", ["controller" => "LoginController", "action" => "index"]);
-// $router->add("/register", ["controller" => "RegisterController", "action" => "index"]);
-
-
 Route::get('/admin', 'App\Controller\Admin\DashboardController@index');
 
 Route::get('/admin/products', 'App\Controller\Admin\ProductController@index');
@@ -85,9 +62,10 @@ Route::delete('/admin/categories/delete/{id}', 'App\Controller\Admin\CategoryCon
 Route::get('/admin/users', 'App\Controller\Admin\UserController@index');
 Route::get('/admin/users/create', 'App\Controller\Admin\UserController@create');
 Route::post('/admin/users/store', 'App\Controller\Admin\UserController@store');
-
 Route::get('/admin/users/{id}', 'App\Controller\Admin\UserController@edit');
 Route::put('/admin/users/update/{id}', 'App\Controller\Admin\UserController@update');
+Route::delete('/admin/users/delete/{id}', 'App\Controller\Admin\UserController@delete');
+
 
 
 

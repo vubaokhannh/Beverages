@@ -91,7 +91,11 @@ class index extends BaseView
 
                                     <td>
                                         <a href="/admin/users/<?= $item['id'] ?>" class="btn btn-sm btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-sm btn-danger">Xóa</a>
+                                        <form action="/admin/users/delete/<?= $item['id'] ?>" method="post"
+                                                style="display: inline-block;">
+                                                <input type="hidden" name="method" value="DELETE" id="">
+                                                <button type="submit" class="btn btn-sm btn-danger">Xoá</button>
+                                            </form>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

@@ -151,4 +151,17 @@ class UserController
             header("Location: /admin/users/$id");
         }
     }
+
+    public static function delete($id)
+    {
+        $user = new User();
+        $return = $user->deleteUser($id);
+        if (!$return) {
+            NotificationHelper::error('delete_user', 'Xóa thông tin khách hàng thất bại!');
+            header("Location: /admin/users");
+        } else {
+            NotificationHelper::success('delete_user', 'Xóa thông tin khách hàng thành công!');
+            header("Location: /admin/users");
+        }
+    }
 }
