@@ -138,7 +138,7 @@ class Header extends BaseView
                                     if ($is_login):
                                     ?>
                                         <div class="header__top__right__auth">
-                                            <a href="#"><i class="fa fa-user"></i> <?= $_SESSION['user']['name'] ?></a>
+                                            <a href="/account/<?= $_SESSION['user']['id'] ?>"><i class="fa fa-user"></i> <?= $_SESSION['user']['name'] ?></a>
                                         </div>
                                     <?php
                                     else:

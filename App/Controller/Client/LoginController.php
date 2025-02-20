@@ -45,7 +45,6 @@ class LoginController
 
         $result = AuthHelper::login( $data);
         if ($result) {
-         
             header('Location: /');
         } else {
             NotificationHelper::error('login', 'Đăng nhập thất bại');

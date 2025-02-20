@@ -253,13 +253,12 @@ class Header extends BaseView
                                             <div class="text-truncate" data-i18n="Carousel">Tất cả </div>
                                         </a>
                                     </li>
-                                    
+
                                 </ul>
                             </li>
 
-                         
                             <!-- #region -->
-                           
+
 
                         </ul>
                     </aside>

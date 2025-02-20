@@ -39,6 +39,8 @@ Route::post('/login', 'App\Controller\Client\LoginController@loginAction');
 Route::get('/register', 'App\Controller\Client\RegisterController@register');
 Route::post('/register', 'App\Controller\Client\RegisterController@registerAction');
 
+Route::get('/account/{id}', 'App\Controller\Client\AccountController@index');
+
 
 Route::get('/admin', 'App\Controller\Admin\DashboardController@index');
 

@@ -123,7 +123,7 @@ class CheckoutController
             if ($_POST['payment_method'] === '0') {
                
                 $order = new Order;
-                $order_id = $order->createOder($data);
+                $order_id = $order->createorder($data);
 
                 if ($order_id) {
                     foreach ($cart_data as $item) {

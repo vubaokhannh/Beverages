@@ -65,7 +65,7 @@ class AuthHelper
     public static function login($data)
     {
         $user = new User();
-        $is_exist = $user->getOneUserByUsername($data['email']);
+        $is_exist = $user->getOneUserByEmail($data['email']);
 
         if (!$is_exist) {
             NotificationHelper::error('email', 'Email không tồn tại');

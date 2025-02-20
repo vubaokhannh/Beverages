@@ -11,7 +11,7 @@ class Order extends BaseModel
     {
         return $this->getAll();
     }
-  
+
     public function getOneorder($id)
     {
         return $this->getOne($id);
@@ -19,7 +19,7 @@ class Order extends BaseModel
 
     public function createorder($data)
     {
-       
+
         return $this->create($data);
     }
     public function updateorder($id, $data)
@@ -35,61 +35,29 @@ class Order extends BaseModel
         return $this->delete($id);
     }
 
-    public function getAllOrder_ByStatus($user_id, $transport)
+    public function getAllOrder_ByStatus($id , $status)
     {
         $result = [];
         try {
-            $sql = "SELECT orders.id, orders.total, orders.orderStatus, orders.date, orders.paymentMethod, orders.user_id , orders.transport
-                    FROM orders 
-                    WHERE orders.user_id = ? AND orders.transport = ?";
+            $sql = "SELECT * FROM orders WHERE user_id = ? AND status = ?";
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param('ii', $user_id, $transport);
+    
+            if (!$stmt) {
+                throw new \Exception("Lỗi chuẩn bị truy vấn: " . $conn->error);
+            }
+    
+            $stmt->bind_param('ii', $id, $status);
             $stmt->execute();
-            return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    
+            $stmt->close();
+            $conn->close();
+    
         } catch (\Throwable $th) {
             error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
-            return $result;
         }
-
+        return $result;
     }
-
-
-    public function createOder(array $data)
-    {
-        // $sql ="INSERT INTO $this->table (name, description, status) VALUES ('category test', 'category test description', '1')";
-
-        // $result = $this->_conn->connect()->query($sql);
-        // return $result;
-
-        try {
-            $sql = "INSERT INTO $this->table (";
-            foreach ($data as $key => $value) {
-                $sql .= "$key, ";
-            }
-            // INSERT INTO $this->table (name, description, status, 
-            $sql = rtrim($sql, ", ");
-            // INSERT INTO $this->table (name, description, status
-            $sql .= " ) VALUES (";
-            // INSERT INTO $this->table (name, description, status) VALUES (
-            foreach ($data as $key => $value) {
-                $sql .= "'$value', ";
-            }
-
-            // INSERT INTO $this->table (name, description, status) VALUES ('category test', 'category test description', '1', 
-            $sql = rtrim($sql, ", ");
-            // INSERT INTO $this->table (name, description, status) VALUES ('category test', 'category test description', '1'
-
-            $sql .= ")";
-            // INSERT INTO $this->table (name, description, status) VALUES ('category test', 'category test description', '1')
-
-            $conn = $this->_conn->MySQLi();
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            return $conn->insert_id;
-        } catch (\Throwable $th) {
-            error_log('Lỗi khi thêm dữ liệu: ' . $th->getMessage());
-            return false;
-        }
-    }
+    
 }

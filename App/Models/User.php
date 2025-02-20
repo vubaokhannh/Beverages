@@ -59,4 +59,21 @@ class User extends BaseModel
             return $result;
         }
     }
+
+    public function getOneUserByName(int $name)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT * FROM $this->table WHERE $this->id=?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+
+            $stmt->bind_param('s', $name);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_assoc();
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
 }
