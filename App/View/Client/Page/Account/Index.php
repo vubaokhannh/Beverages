@@ -43,6 +43,10 @@ class Index extends BaseView
                                         <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
                                             aria-selected="false">Đơn hàng đã hủy</a>
                                     </li>
+
+                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3 nav-item">
+                                        <a class="nav-link" href="/logout">Đăng xuất</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -230,7 +234,7 @@ class Index extends BaseView
                                             </div>
                                             <div class="tab-pane" id="tabs-3" role="tabpanel">
                                                 <div class="product__details__tab__desc">
-                                                <h5 class="text-center mb-3">Đơn hàng đã hủy</h5>
+                                                    <h5 class="text-center mb-3">Đơn hàng đã hủy</h5>
                                                     <table class="table table-hover">
                                                         <thead>
                                                             <tr>

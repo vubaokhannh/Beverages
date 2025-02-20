@@ -43,12 +43,19 @@ class LoginController
             'remember' => isset($_POST['remember'])
         ];
 
-        $result = AuthHelper::login( $data);
+        $result = AuthHelper::login($data);
         if ($result) {
             header('Location: /');
         } else {
             NotificationHelper::error('login', 'Đăng nhập thất bại');
             header('Location: /login');
         }
+    }
+
+    public static function logout()
+    {
+        AuthHelper::logout();
+        NotificationHelper::success('logout', 'Đăng xuất thành công');
+        header('Location: /');
     }
 }
