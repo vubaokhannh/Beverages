@@ -97,11 +97,58 @@ class UserController
         }
     }
 
-    public function edit()
+    public function edit($id)
     {
 
+        $model = new User();
+        $user = $model->getOneUser($id);
+
+        $data = [
+            'users' => $user,
+
+        ];
+
         Header::render();
-        Edit::render();
+        Notification::render();
+        NotificationHelper::unset();
+        Edit::render($data);
         Footer::render();
+    }
+
+    public static function update($id)
+    {
+
+        $is_valid = UserValidation::edit();
+        if (!$is_valid) {
+            NotificationHelper::error('update_user', 'Cập nhật thông tin khách hàng thất bại');
+            header("Location: /admin/users/$id");
+            exit();
+        }
+
+        $user = new User();
+
+        $data = [
+            'email' => $_POST['email'],
+            'name' => $_POST['name'],
+            'phone' => $_POST['phone'],
+            'address' => $_POST['address'],
+            'status' => $_POST['status'],
+            'role' => $_POST['role'],
+        ];
+
+        $is_upload = UserValidation::updateImage();
+        if ($is_upload) {
+            $data['avatar'] = $is_upload;
+        }
+
+
+        $result = $user->updateUser($id, $data);
+        if ($result) {
+            NotificationHelper::success('update_user', 'Cập nhật thông tin khách hàng thành công');
+            header('location: /admin/users');
+        } else {
+            NotificationHelper::error('update_user', 'Cập nhật thông tin khách hàng thất bại');
+            header("Location: /admin/users/$id");
+        }
     }
 }

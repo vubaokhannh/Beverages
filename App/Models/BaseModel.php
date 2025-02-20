@@ -116,6 +116,7 @@ abstract class BaseModel implements CrudInterface
 
             $sql .= " WHERE $this->id=$id";
 
+
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
             return $stmt->execute();

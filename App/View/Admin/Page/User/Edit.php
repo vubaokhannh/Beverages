@@ -28,65 +28,53 @@ class Edit extends BaseView
                 </div>
               </div>
               <div class="card-body pt-4">
-                <form action="/admin/users" id="" method="POST" enctype="multipart/form-data">
-                  <input type="hidden" name="method" id="" value="POST">
+                <form action="/admin/users/update/<?= $data['users']['id'] ?>" id="" method="POST" enctype="multipart/form-data">
+                  <input type="hidden" name="method" id="" value="PUT">
                   <div class="row g-6">
                     <div class="col-md-12">
                       <label for="name" class="form-label">Họ và Tên <span class="text-danger"> *</span></label>
-                      <input class="form-control" type="text" id="name" name="name" autofocus />
+                      <input class="form-control" type="text" id="name" name="name"  value="<?= $data['users']['name'] ?>" />
                     </div>
-                    <div class="col-md-12">
-                      <label for="username" class="form-label">Tên đăng nhập<span class="text-danger"> *</span></label>
-                      <input class="form-control" type="text" id="username" name="username" autofocus />
-                    </div>
+
                     <div class="col-md-12">
                       <label for="avatar" class="form-label">Ảnh đại diện<span class="text-danger"> *</span></label>
                       <input class="form-control" type="file" id="avatar" name="avatar" />
                     </div>
                     <div class="col-md-6">
                       <label for="phone" class="form-label">Số điện thoại </label>
-                      <input type="text" class="form-control" id="phone" name="phone" />
+                      <input type="text" class="form-control" id="phone" name="phone" value="<?= $data['users']['phone'] ?>" />
                     </div>
                     <div class="col-md-6">
                       <label class="form-label" for="email">Email <span class="text-danger"> *</span></label>
                       <div class="input-group input-group-merge">
-                        <input type="email" id="email" name="email" class="form-control" />
+                        <input type="email" id="email" name="email" class="form-control" value="<?= $data['users']['email'] ?>" />
                       </div>
                     </div>
-                    <div class="col-md-6">
-                      <label for="password" class="form-label">Mật khẩu <span class="text-danger"> *</span></label>
-                      <input type="password" class="form-control" id="password" name="password" />
-                    </div>
-                    <div class="col-md-6">
-                      <label class="form-label" for="re_password">Nhập lại mật khẩu <span class="text-danger"> *</span></label>
-                      <div class="input-group input-group-merge">
-                        <input type="password" id="re_password" name="re_password" class="form-control" />
-                      </div>
-                    </div>
+                  
                     <div class="col-md-12">
                       <label for="address" class="form-label">Địa chỉ </label>
                       <textarea class="form-control" type="text" id="address" rows="5" name="address"
-                        placeholder="Nhập địa chỉ"></textarea>
+                        placeholder="Nhập địa chỉ"><?= $data['users']['address'] ?></textarea>
                     </div>
                     <div class="col-md-6">
                       <label for="status" class="form-label">Trạng thái<span class="text-danger"> *</span></label>
                       <select id="status" class="select2 form-select" name="status">
                         <option value="">Chọn trạng thái</option>
-                        <option value="1">Kích hoạt</option>
-                        <option value="0">Không kích hoạt</option>
+                        <option value="1" <?= $data['users']['status'] == 1 ? 'selected' : '' ?>>Hoạt động</option>
+                        <option value="2" <?= $data['users']['status'] == 0 ? 'selected' : '' ?>>Tạm dừng</option>
                       </select>
                     </div>
                     <div class="col-md-6">
                       <label for="role" class="form-label">Quyền <span class="text-danger"> *</span></label>
                       <select id="role" class="select2 form-select" name="role">
                         <option value="">Chọn quyền</option>
-                        <option value="0">Quản trị</option>
-                        <option value="1">Khách hàng</option>
+                        <option value="0" <?= $data['users']['role'] == 0 ? 'selected' : '' ?>>Quản trị</option>
+                        <option value="1" <?= $data['users']['role'] == 1 ? 'selected' : '' ?>>Khách hàng</option>
                       </select>
                     </div>
                   </div>
                   <div class="mt-6">
-                    <button type="submit" class="btn btn-primary me-3" name>Thêm</button>
+                    <button type="submit" class="btn btn-primary me-3" name>Lưu</button>
                     <button type="reset" class="btn btn-outline-secondary" name>Nhập lại</button>
                   </div>
                 </form>

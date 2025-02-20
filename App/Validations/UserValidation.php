@@ -64,35 +64,20 @@ class UserValidation
     public static function edit()
     {
         $is_valid = true;
-        // Tên đăng nhập
         if (!isset($_POST['name']) || $_POST['name'] === '') {
-            NotificationHelper::error('name', 'Không để trống tên');
+            NotificationHelper::error('name', 'Không để trống tên ');
             $is_valid = false;
         }
 
-        if (!isset($_POST['price']) || $_POST['price'] === '') {
-            NotificationHelper::error('price', 'Không để trống giá tiền');
+        if (!isset($_POST['email']) || $_POST['email'] === '') {
+            NotificationHelper::error('email', 'Không để trống Email');
             $is_valid = false;
-        } else if ((int) $_POST['price'] <= 0) {
-            NotificationHelper::error('price', 'Giá tiền phải lớn hơn 0');
-            $is_valid = false;
-        }
-
-        // Giá giảm
-        if (!isset($_POST['discount_price']) || $_POST['discount_price'] === '') {
-            NotificationHelper::error('discount_price', 'Không để trống giá giảm');
-            $is_valid = false;
-        } else if ((int) $_POST['discount_price'] < 0) {
-            NotificationHelper::error('discount_price', 'Giá giảm phải lớn hơn 0');
-            $is_valid = false;
-        } else if ((int) $_POST['discount_price'] > (int) $_POST['price']) {
-            NotificationHelper::error('discount_price', 'Giá giảm phải nhỏ hơn giá tiền');
-            $is_valid = false;
-        }
-
-        if (!isset($_POST['category_id']) || $_POST['category_id'] === '') {
-            NotificationHelper::error('category_id_Product', 'Loại sản phẩm không được để trống!');
-            $is_valid = false;
+        } else {
+            $emailPattern = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/";
+            if (!preg_match($emailPattern, $_POST['email'])) {
+                NotificationHelper::error('email', 'Email không đúng định dạng');
+                $is_valid = false;
+            }
         }
 
         if (!isset($_POST['status']) || $_POST['status'] === '') {
@@ -100,6 +85,11 @@ class UserValidation
             $is_valid = false;
         }
 
+        if (!isset($_POST['role']) || $_POST['role'] === '') {
+            NotificationHelper::error('role', 'Không để trống quyền');
+
+            $is_valid = false;
+        }
         return $is_valid;
     }
 
