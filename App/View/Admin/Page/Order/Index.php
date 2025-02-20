@@ -47,11 +47,11 @@ class Index extends BaseView
                     <table class="table">
                         <thead class="table-light">
                             <tr>
-                                <th style="width: 15px">Id</th>
+
                                 <th>Tên khách hàng</th>
                                 <th>Số tiền thanh toán</th>
                                 <th>Số điện thoại</th>
-                                <th>Ngày Mua</th>
+                                <th>Email</th>
                                 <th>Địa chỉ</th>
                                 <th></th>
                                 <th></th>
@@ -62,62 +62,33 @@ class Index extends BaseView
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                            <tr>
-                                <td>1</td>
-                                <td>Khanh</td>
-                                <td>100000đ</td>
-                                <td>0987654321</td>
-                                <td>2022-01-01</td>
-                                <td>Thành Phố HCM</td>
-                                <td>
-                                    <a href="" class="btn btn-sm btn-primary">Chi tiết</a>
-                                </td>
-                                <td>
-                                    <a href="" class="btn btn-sm btn-warning">Hủy đơn hàng</a>
-                                </td>
-                            </tr>
+                            <?php
+                            foreach ($data['order'] as $item):
+                            ?>
+                                <tr>
+
+                                    <td><?= $item['name'] ?></td>
+                                    <td><?= number_format($item['total']) ?> VNĐ</td>
+                                    <td><?= $item['phone'] ?></td>
+                                    <td><?= $item['email'] ?></td>
+                                    <td><?= $item['address'] ?></td>
+                                    <td>
+                                        <a href="" class="btn btn-sm btn-primary">Chi tiết</a>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn btn-sm btn-warning">Hủy đơn hàng</a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
 
                         </tbody>
                     </table>
                 </div>
             </div>
-            <!-- / Basic Bootstrap Table
-      <div class="row my-5 justify-content-center">
-          <nav aria-label="...">
-            <ul class="pagination d-flex justify-content-center">
-              <?php
-                $currentPage = isset($_GET['pages']) ? intval($_GET['pages']) : 1;
-                $totalPages = $data['total_pages'];
 
-                $prevPage = $currentPage - 1;
-                ?>
-              <li class="page-item <?= $currentPage <= 1 ? 'disabled' : '' ?>">
-                <a class="page-link" href="<?= $currentPage > 1 ? '/admin/products?pages=' . $prevPage : '#' ?>">
-                  << </a>
-              </li>
-
-              <?php
-                for ($i = 1; $i <= $totalPages; $i++): ?>
-                <li class="page-item <?= $i === $currentPage ? 'active' : '' ?>">
-                  <a class="page-link" href="/admin/products?pages=<?= $i ?>"><?= $i ?></a>
-                </li>
-              <?php endfor; ?>
-
-              <?php
-                $nextPage = $currentPage + 1;
-                ?>
-              <li class="page-item <?= $currentPage >= $totalPages ? 'disabled' : '' ?>">
-                <a class="page-link" href="<?= $currentPage < $totalPages ? '/admin/products?pages=' . $nextPage : '#' ?>"> >> </a>
-              </li>
-            </ul>
-          </nav>
-
-        </div> -->
             <hr class="my-12" />
 
-            <!-- Bootstrap Dark Table -->
 
-            <!--/ Bootstrap Dark Table -->
         </div>
 
 

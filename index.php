@@ -68,6 +68,12 @@ Route::delete('/admin/users/delete/{id}', 'App\Controller\Admin\UserController@d
 
 
 
+Route::get('/admin/orders', 'App\Controller\Admin\OrderController@index');
+
+
+
+
+
 
 
 
