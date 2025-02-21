@@ -256,6 +256,45 @@ class Header extends BaseView
 
                                 </ul>
                             </li>
+                            <li class="menu-item <?= strpos($currentPath, '/admin/materials') === 0 ? 'active open' : '' ?>">
+                                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                    <i class="menu-icon tf-icons bx bx-layout"></i>
+                                    <div class="text-truncate" data-i18n="Layouts">Nguyên liệu</div>
+                                </a>
+
+                                <ul class="menu-sub">
+                                    <li class="menu-item <?= $currentPath == '/admin/materials' ? 'active' : '' ?>">
+                                        <a href="/admin/materials" class="menu-link">
+                                            <div class="text-truncate" data-i18n="Container">Tất cả</div>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item <?= $currentPath == '/admin/materials/create' ? 'active' : '' ?>">
+                                        <a href="/admin/materials/create" class="menu-link">
+                                            <div class="text-truncate" data-i18n="Blank">Thêm mới</div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="menu-item <?= strpos($currentPath, '/admin/warehouse') === 0 ? 'active open' : '' ?>">
+                                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                    <i class="menu-icon tf-icons bx bx-layout"></i>
+                                    <div class="text-truncate" data-i18n="Layouts">Kho</div>
+                                </a>
+
+                                <ul class="menu-sub">
+                                    <li class="menu-item <?= $currentPath == '/admin/warehouse' ? 'active' : '' ?>">
+                                        <a href="/admin/warehouse" class="menu-link">
+                                            <div class="text-truncate" data-i18n="Container">Tất cả</div>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item <?= $currentPath == '/admin/warehouse/create' ? 'active' : '' ?>">
+                                        <a href="/admin/warehouse/create" class="menu-link">
+                                            <div class="text-truncate" data-i18n="Blank">Nhập kho</div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
 
                             <!-- #region -->
 

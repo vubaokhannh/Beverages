@@ -70,9 +70,22 @@ Route::get('/admin/users/{id}', 'App\Controller\Admin\UserController@edit');
 Route::put('/admin/users/update/{id}', 'App\Controller\Admin\UserController@update');
 Route::delete('/admin/users/delete/{id}', 'App\Controller\Admin\UserController@delete');
 
-
+Route::get('/admin/materials', 'App\Controller\Admin\MaterialController@index');
+Route::get('/admin/materials/create', 'App\Controller\Admin\MaterialController@create');
+Route::post('/admin/materials/store', 'App\Controller\Admin\MaterialController@store');
+Route::get('/admin/materials/{id}', 'App\Controller\Admin\MaterialController@edit');
+Route::put('/admin/materials/update/{id}', 'App\Controller\Admin\MaterialController@update');
+Route::delete('/admin/materials/delete/{id}', 'App\Controller\Admin\MaterialController@delete');
 
 Route::get('/admin/orders', 'App\Controller\Admin\OrderController@index');
+
+Route::get('/admin/warehouse', 'App\Controller\Admin\WarehouseController@index');
+Route::get('/admin/warehouse/create', 'App\Controller\Admin\WarehouseController@create');
+Route::post('/admin/warehouse/store', 'App\Controller\Admin\WarehouseController@store');
+
+
+
+
 
 
 
