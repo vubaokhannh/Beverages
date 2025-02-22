@@ -2,34 +2,34 @@
 
 namespace App\Models;
 
-class Material extends BaseModel
+class Purchase_order_items extends BaseModel
 {
-    protected $table = 'materials';
+    protected $table = 'purchase_order_items';
     protected $id = 'id';
 
-    public function getAllMaterial()
+    public function getAllpurchase_order_items()
     {
         return $this->getAll();
     }
-    public function getOneMaterial($id)
+    public function getOnepurchase_order_items($id)
     {
         return $this->getOne($id);
     }
 
-    public function createMaterial($data)
+    public function createpurchase_order_items($data)
     {
         return $this->create($data);
     }
-    public function updateMaterial($id, $data)
+    public function updatepurchase_order_items($id, $data)
     {
         return $this->update($id, $data);
     }
 
-    public function deleteMaterial($id)
+    public function deletepurchase_order_items($id)
     {
         return $this->delete($id);
     }
-    public function getAllMaterialByStatus()
+    public function getAllpurchase_order_itemsByStatus()
     {
         return $this->getAllByStatus();
     }
@@ -39,7 +39,7 @@ class Material extends BaseModel
         $result = $this->_conn->MySQLi()->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-    public function getOneMaterialByName($name)
+    public function getOnepurchase_order_itemsByName($name)
     {
         $result = [];
         try {
@@ -55,14 +55,12 @@ class Material extends BaseModel
             return $result;
         }
     }
-    public function countTotalMaterial()
+    public function countTotalpurchase_order_items()
     {
         return $this->countTotal();
     }
-    public function getAllMaterialProductByStatus(int $id)
+    public function getAllInventoryProductByStatus(int $id)
     {
-
-
 
         $result = [];
         try {
@@ -84,28 +82,12 @@ class Material extends BaseModel
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function checkNameAndUnit($name, $unit)
-  {
-    $result = [];
-    try {
-      $sql = "SELECT * FROM materials WHERE name=? AND unit=?";
-      $conn = $this->_conn->MySQLi();
-      $stmt = $conn->prepare($sql);
-
-      $stmt->bind_param('ss', $name, $unit);
-      $stmt->execute();
-      return $stmt->get_result()->fetch_assoc();
-    } catch (\Throwable $th) {
-      error_log('Lỗi khi lấy bằng tên: ' . $th->getMessage());
-      return $result;
+    public function getInventoryByMaterial()
+    {
+        $sql = "SELECT inventory.*, materials.*
+                FROM inventory
+                INNER JOIN materials ON inventory.material_id = materials.id";
+        $result = $this->_conn->MySQLi()->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
-  }
-
-  public function getMaxId()
-  {
-      $result = 0;
-      $sql = "SELECT MAX(id) as max_id FROM materials";
-      $result = $this->_conn->MySQLi()->query($sql)->fetch_assoc()['max_id'];
-      return $result;
-  }
 }

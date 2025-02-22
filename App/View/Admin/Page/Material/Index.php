@@ -65,7 +65,7 @@ class Index extends BaseView
 
                                         <td><?= $item['id'] ?></td>
                                         <td><?= $item['name'] ?></td>
-                                        <td><?= $item['unti'] ?></td>
+                                        <td><?= $item['unit'] ?></td>
                                         <td><?= $item['created_at'] ?></td>
                                         <td>
                                             <a href="/admin/materials/<?= $item['id'] ?>" class="btn btn-sm btn-primary">Sửa</a>

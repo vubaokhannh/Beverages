@@ -95,7 +95,7 @@ abstract class BaseModel implements CrudInterface
 
             $sql .= ")";
             // INSERT INTO $this->table (name, description, status) VALUES ('category test', 'category test description', '1')
-
+            
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
 
@@ -115,7 +115,6 @@ abstract class BaseModel implements CrudInterface
             $sql = rtrim($sql, ", ");
 
             $sql .= " WHERE $this->id=$id";
-
 
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
