@@ -76,8 +76,13 @@ class Create extends BaseView
                                             <select id="category_id" name="category_id" class="select2 form-select">
                                                 <option value="">Chọn danh mục</option>
 
-
-                                                <option value="1">1</option>
+                                                <?php
+                                                foreach ($data['categories'] as $item):
+                                                ?>
+                                                    <option value="<?= $item['id'] ?>"><?= $item['name'] ?></option>
+                                                <?php
+                                                endforeach;
+                                                ?>
 
                                             </select>
                                         </div>

@@ -121,11 +121,11 @@ class CheckoutController
             ];
 
             if ($_POST['payment_method'] === '0') {
-               
                 $order = new Order;
-                $order_id = $order->createorder($data);
-
-                if ($order_id) {
+                $order_data = $order->createorder($data);
+                $order_id = $order->getMaxId();
+          
+                if ($order_data) {
                     foreach ($cart_data as $item) {
                         $orderDetailData = [
                             'order_id' => $order_id,
@@ -133,12 +133,11 @@ class CheckoutController
                             'quantity' => $item['quantity'],
                             'price' => $item['data']['price'],
                         ];
-
+                      
                         $orderDetail = new OrderDetail;
-                        $orderDetailData =  $orderDetail->createorderDetail($orderDetailData);
+                        $orderDetailData =  $orderDetail->create($orderDetailData);
                     }
                 }
-
                 setcookie('cart', '', time() - (3600 * 24 * 30 * 12), '/');
                 NotificationHelper::success('cart', 'Đặt hàng thành công');
                 header('location: /');

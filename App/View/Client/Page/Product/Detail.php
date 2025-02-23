@@ -52,23 +52,24 @@ class Detail extends BaseView
                                 <i class="fa fa-star-half-o"></i>
                                 <span>(18 reviews)</span>
                             </div>
-                            <div class="product__details__price"><?= number_format($data["products"]["price"]) ?></div>
+                            <div class="product__details__price"><?= number_format($data["products"]["price"]) ?> VNĐ</div>
                             <p><?= $data["products"]["short_description"] ?></p>
                             <div class="product__details__quantity">
-                                <div class="quantity">
-                                    <div class="pro-qty">
-                                        <input type="button" class="dec qtybtn" value="-">
-                                        <input type="text" value="1">
-                                        <input type="button" class="inc qtybtn" value="+">
+                                <form action="/cart/add" method="post">
+                                    <div class="quantity">
+                                        <div class="pro-qty">
+                                            <input type="button" class="dec qtybtn" value="-">
+                                            <input type="text" value="1" id="quantity" name="number">
+                                            <input type="button" class="inc qtybtn" value="+">
+
+                                        </div>
                                     </div>
-                                </div>
                             </div>
 
-                            <form action="/cart/add" method="post">
-                                <input type="hidden" name="method" id="" value="POST">
-                                <input type="hidden" name="id" id="" value="<?= $data['products']['id'] ?>">
-                                <button type="submit" class="primary-btn mt-4 border-0">Thêm vào giỏ hàng</button>
-                                <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
+                            <input type="hidden" name="method" id="" value="POST">
+                            <input type="hidden" name="id" id="" value="<?= $data['products']['id'] ?>">
+                            <button type="submit" class="primary-btn mt-4 border-0">Thêm vào giỏ hàng</button>
+                            <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
                             </form>
                             <ul>
                                 <li><b>Availability</b> <span>In Stock</span></li>
@@ -228,6 +229,35 @@ class Detail extends BaseView
                 </div>
             </div>
         </section>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const decBtn = document.querySelector(".dec"); // Nút giảm
+                const incBtn = document.querySelector(".inc"); // Nút tăng
+                const quantityInput = document.querySelector("#quantity"); // Ô nhập số lượng
+
+                // Giảm số lượng
+                decBtn.addEventListener("click", function() {
+                    let value = parseInt(quantityInput.value) || 1;
+                    if (value > 1) {
+                        quantityInput.value = value - 1;
+                        console.log("Số lượng sau khi giảm:", quantityInput.value);
+                    }
+                });
+
+                // Tăng số lượng
+                incBtn.addEventListener("click", function() {
+                    let value = parseInt(quantityInput.value) || 1;
+                    quantityInput.value = value + 1;
+                    console.log("Số lượng sau khi tăng:", quantityInput.value);
+                });
+
+                // Lắng nghe khi nhập số lượng bằng tay
+                quantityInput.addEventListener("input", function() {
+                    console.log("Số lượng nhập:", quantityInput.value);
+                });
+            });
+        </script>
 
 
 <?php

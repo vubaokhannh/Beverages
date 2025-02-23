@@ -3,7 +3,7 @@ function handleDeleteFormSubmission(form) {
   // Hiển thị SweetAlert yêu cầu xác nhận
   Swal.fire({
     title: "Bạn có chắc chắn muốn xóa?",
-    text: "Thêm vào thùng rác",
+    text: "Xóa xong không thể khôi phục lại",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",

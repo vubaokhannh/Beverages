@@ -59,5 +59,13 @@ class Order extends BaseModel
         }
         return $result;
     }
+
+    public function getMaxId()
+    {
+        $result = 0;
+        $sql = "SELECT MAX(id) as max_id FROM orders";
+        $result = $this->_conn->MySQLi()->query($sql)->fetch_assoc()['max_id'];
+        return $result;
+    }
     
 }

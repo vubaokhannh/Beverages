@@ -64,6 +64,12 @@ class Header extends BaseView
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
             <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 
+       
+            <!-- Bootstrap Icons -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+            <!-- jQuery -->
+            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
         </head>
 
         <body>
@@ -271,6 +277,25 @@ class Header extends BaseView
                                     <li class="menu-item <?= $currentPath == '/admin/materials/create' ? 'active' : '' ?>">
                                         <a href="/admin/materials/create" class="menu-link">
                                             <div class="text-truncate" data-i18n="Blank">Thêm mới</div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="menu-item <?= strpos($currentPath, '/admin/recipes') === 0 ? 'active open' : '' ?>">
+                                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                    <i class="menu-icon tf-icons bx bx-layout"></i>
+                                    <div class="text-truncate" data-i18n="Layouts">Công thức món ăn</div>
+                                </a>
+
+                                <ul class="menu-sub">
+                                    <li class="menu-item <?= $currentPath == '/admin/recipes' ? 'active' : '' ?>">
+                                        <a href="/admin/recipes" class="menu-link">
+                                            <div class="text-truncate" data-i18n="Container">Tất cả</div>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item <?= $currentPath == '/admin/recipes/create' ? 'active' : '' ?>">
+                                        <a href="/admin/recipes/create" class="menu-link">
+                                            <div class="text-truncate" data-i18n="Blank">Thêm công thức</div>
                                         </a>
                                     </li>
                                 </ul>

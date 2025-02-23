@@ -18,6 +18,7 @@ Route::get('/', 'App\Controller\Client\HomeController@index');
 
 Route::get('/products', 'App\Controller\Client\ProductController@index');
 Route::get('/products/{id}', 'App\Controller\Client\ProductController@detail');
+Route::get('/products/categories/{id}', 'App\Controller\Client\ProductController@getProductByCategory');
 
 
 
@@ -28,10 +29,6 @@ Route::delete('/cart/delete', 'App\Controller\Client\CartController@deleteItem')
 
 Route::get('/checkout', 'App\Controller\Client\CheckoutController@checkout');
 Route::post('/order', 'App\Controller\Client\CheckoutController@order');
-
-
-
-
 
 Route::get('/login', 'App\Controller\Client\LoginController@Login');
 Route::post('/login', 'App\Controller\Client\LoginController@loginAction');
@@ -82,6 +79,13 @@ Route::get('/admin/orders', 'App\Controller\Admin\OrderController@index');
 Route::get('/admin/warehouse', 'App\Controller\Admin\WarehouseController@index');
 Route::get('/admin/warehouse/create', 'App\Controller\Admin\WarehouseController@create');
 Route::post('/admin/warehouse/store', 'App\Controller\Admin\WarehouseController@store');
+
+
+Route::get('/admin/recipes', 'App\Controller\Admin\RecipesController@index');
+Route::get('/admin/recipes/create', 'App\Controller\Admin\RecipesController@create');
+
+Route::post('/admin/recipes/store', 'App\Controller\Admin\RecipesController@store');
+
 
 
 

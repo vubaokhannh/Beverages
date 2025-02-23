@@ -103,7 +103,7 @@ class index extends BaseView
                                             <form action="/admin/products/delete/<?= $item['id'] ?>" method="post"
                                                 style="display: inline-block;">
                                                 <input type="hidden" name="method" value="DELETE" id="">
-                                                <button type="submit" class="btn btn-sm btn-danger">Xoá</button>
+                                                <button class="btn btn-sm btn-danger delete-button">Xoá</button>
                                             </form>
                                         </td>
                                     </tr>

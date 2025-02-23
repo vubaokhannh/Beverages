@@ -49,8 +49,9 @@ class CartController
     {
         ob_start();
         $product = new Product();
-
         $product_id = $_POST['id'];
+        $number = $_POST['number'];
+      
 
         if (isset($_COOKIE['cart'])) {
             $cookie_data = $_COOKIE['cart'];
@@ -64,8 +65,13 @@ class CartController
         if (in_array($product_id, $product_id_arr)) {
             foreach ($cart_data as $key => $value) {
                 if ($cart_data[$key]['product_id'] == $product_id) {
-                    $cart_data[$key]['quantity'] += 1;
+                    if (isset($_POST['number'])) {
+                        $cart_data[$key]['quantity'] += $number;
+                    } else {
+                        $cart_data[$key]['quantity'] += 1;
+                    }
                 }
+               
             }
         } else {
             $product_array = [

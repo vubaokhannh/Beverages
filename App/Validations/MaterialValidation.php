@@ -16,8 +16,8 @@ class MaterialValidation
             $is_valid = false;
         }
 
-        if (!isset($_POST['unti']) || $_POST['unti'] === '') {
-            NotificationHelper::error('unti', 'Không để trống đơn vị tính');
+        if (!isset($_POST['unit']) || $_POST['unit'] === '') {
+            NotificationHelper::error('unit', 'Không để trống đơn vị tính');
             $is_valid = false;
         }
 
@@ -38,8 +38,8 @@ class MaterialValidation
             $is_valid = false;
         }
 
-        if (!isset($_POST['unti']) || $_POST['unti'] === '') {
-            NotificationHelper::error('unti', 'Không để trống đơn vị tính');
+        if (!isset($_POST['unit']) || $_POST['unit'] === '') {
+            NotificationHelper::error('unit', 'Không để trống đơn vị tính');
             $is_valid = false;
         }
 

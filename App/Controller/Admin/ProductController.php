@@ -47,12 +47,18 @@ class ProductController extends Controller
 
     public function create()
     {
+        $model = new Category();
+        $categories = $model->getAll();
+        $data = [
+            'categories' => $categories,
+        ];
+
 
 
         Header::render();
         Notification::render();
         NotificationHelper::unset();
-        Create::render();
+        Create::render( $data);
         Footer::render();
     }
 
@@ -206,7 +212,7 @@ class ProductController extends Controller
         $_SESSION['keywords'] = $keyword;
         $product = new Product();
         $products = $product->search($keyword);
-       
+
         $data = [
             'products' => $products,
 

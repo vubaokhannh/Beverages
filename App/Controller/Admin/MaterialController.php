@@ -72,7 +72,7 @@ class MaterialController
 
         $data = [
             'name' => $name,
-            'unti' => $_POST['unti'],
+            'unit' => $_POST['unit'],
             'created_at' => $_POST['created_at'],
         ];
 
@@ -96,8 +96,9 @@ class MaterialController
             'material' => $material,
         ];
 
-
         Header::render();
+        Notification::render();
+        NotificationHelper::unset();
         Edit::render($data);
         Footer::render();
     }
@@ -125,11 +126,9 @@ class MaterialController
 
         $data = [
             'name' => $name,
-            'unti' => $_POST['unti'],
+            'unit' => $_POST['unit'],
             'created_at' => $_POST['created_at'],
         ];
-
-
 
         $result = $material->updateMaterial($id, $data);
         if ($result) {

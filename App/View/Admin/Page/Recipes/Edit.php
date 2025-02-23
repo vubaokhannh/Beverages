@@ -36,7 +36,7 @@ class Edit extends BaseView
                     </div>
                     <div class="col-md-6">
                       <label for="unti" class="form-label">Đơn vị tính <span class="text-danger"> *</span></label>
-                      <input class="form-control" type="text" id="name" name="unit" value="<?= $data['material']['unit'] ?>" />
+                      <input class="form-control" type="text" id="name" name="unti" value="<?= $data['material']['unit'] ?>" />
                     </div>
                     <div class="col-md-12">
                       <label for="created_at" class="form-label">Ngày tạo<span class="text-danger"> *</span></label>

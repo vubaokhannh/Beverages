@@ -15,7 +15,7 @@ class Index extends BaseView
                 <div class="row">
                     <div class="col-lg-12 text-center">
                         <div class="breadcrumb__text">
-                            <h2>Organi Shop</h2>
+                            <h2>Sản phẩm</h2>
                             <div class="breadcrumb__option">
                                 <a href="/">Home</a>
                                 <span>Shop</span>
@@ -36,20 +36,15 @@ class Index extends BaseView
                             <div class="sidebar__item">
                                 <h4>Danh Mục</h4>
                                 <ul>
-                                    <li><a href="#">Fresh Meat</a></li>
-                                    <li><a href="#">Vegetables</a></li>
-                                    <li><a href="#">Fruit & Nut Gifts</a></li>
-                                    <li><a href="#">Fresh Berries</a></li>
-                                    <li><a href="#">Ocean Foods</a></li>
-                                    <li><a href="#">Butter & Eggs</a></li>
-                                    <li><a href="#">Fastfood</a></li>
-                                    <li><a href="#">Fresh Onion</a></li>
-                                    <li><a href="#">Papayaya & Crisps</a></li>
-                                    <li><a href="#">Oatmeal</a></li>
+                                    <?php foreach ($data['categories'] as $item_cate): ?>
+                                        <li><a href="/products/categories/<?= $item_cate['id'] ?>"><?= $item_cate['name'] ?></a></li>
+
+                                    <?php endforeach ?>
+
                                 </ul>
                             </div>
                             <div class="sidebar__item">
-                                <h4>Price</h4>
+                                <h4>Giá</h4>
                                 <div class="price-range-wrap">
                                     <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
                                         data-min="10" data-max="540">
@@ -65,7 +60,7 @@ class Index extends BaseView
                                     </div>
                                 </div>
                             </div>
-                            <div class="sidebar__item sidebar__item__color--option">
+                            <!-- <div class="sidebar__item sidebar__item__color--option">
                                 <h4>Colors</h4>
                                 <div class="sidebar__item__color sidebar__item__color--white">
                                     <label for="white">
@@ -103,8 +98,8 @@ class Index extends BaseView
                                         <input type="radio" id="green">
                                     </label>
                                 </div>
-                            </div>
-                            <div class="sidebar__item">
+                            </div> -->
+                            <!-- <div class="sidebar__item">
                                 <h4>Popular Size</h4>
                                 <div class="sidebar__item__size">
                                     <label for="large">
@@ -130,10 +125,10 @@ class Index extends BaseView
                                         <input type="radio" id="tiny">
                                     </label>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="sidebar__item">
                                 <div class="latest-product__text">
-                                    <h4>Latest Products</h4>
+                                    <h4>Sản phẩm mới nhất</h4>
                                     <div class="latest-product__slider owl-carousel">
                                         <div class="latest-prdouct__slider__item">
                                             <a href="/product/detail" class="latest-product__item">
@@ -349,13 +344,13 @@ class Index extends BaseView
                                         <div class="product__item__pic set-bg" data-setbg="/public/uploads/products/<?= $item['img'] ?>">
                                             <ul class="product__item__pic__hover">
                                                 <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                                <li><a href="/products/<?= $item["id"]?>"><i class="fa fa-retweet"></i></a></li>
+                                                <li><a href="/products/<?= $item["id"] ?>"><i class="fa fa-retweet"></i></a></li>
                                                 <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
                                             </ul>
                                         </div>
                                         <div class="product__item__text">
-                                            <h6><a href="/products/<?= $item["id"]?>"><?=$item["name"] ?></a></h6>
-                                            <h5><?=number_format($item["price"]) ?></h5>
+                                            <h6><a href="/products/<?= $item["id"] ?>"><?= $item["name"] ?></a></h6>
+                                            <h5><?= number_format($item["price"]) ?> VNĐ</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -364,7 +359,7 @@ class Index extends BaseView
                             endforeach;
 
                             ?>
-                          
+
                         </div>
                         <div class="product__pagination">
                             <a href="#">1</a>
