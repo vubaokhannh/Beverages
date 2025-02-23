@@ -6,9 +6,9 @@ namespace App\Controller\Admin;
 use App\View\Admin\Layouts\Header;
 use App\View\Admin\Layouts\Footer;
 
-use App\View\Admin\Page\Category\Index;
+use App\View\Admin\Page\Recipes\Index;
 use App\View\Admin\Page\Recipes\Create;
-use App\View\Admin\Page\Category\Edit;
+use App\View\Admin\Page\Recipes\Edit;
 
 use App\Models\Product;
 use App\Models\Material;
@@ -27,7 +27,33 @@ class RecipesController
 {
     public function index()
     {
-        echo "This is the Recipes controller";
+
+        $model = new Recipes();
+        $recipes = $model->getAll();
+
+        // Lấy danh sách nguyên liệu
+        $model_ingredients = new Ingerdients();
+        $ingredients = $model_ingredients->getAll();
+
+        // Nhóm nguyên liệu theo từng công thức
+        $ingredientsByRecipe = [];
+        foreach ($ingredients as $ingredient) {
+            $recipesId = $ingredient['recipes_id'];
+            $ingredientsByRecipe[$recipesId][] = $ingredient;
+        }
+
+        // Dữ liệu truyền vào view
+        $data = [
+            'recipes' => $recipes,
+            'ingredientsByRecipe' => $ingredientsByRecipe,
+        ];
+        
+
+        Header::render();
+        Notification::render();
+        NotificationHelper::unset();
+        Index::render($data);
+        Footer::render();
     }
 
     public function create()
@@ -55,61 +81,59 @@ class RecipesController
     public function store()
     {
         $is_valid = RecipesValidation::create();
-
+    
         if (!$is_valid) {
             NotificationHelper::error('createvalidation', 'Thêm công thức thất bại');
             header('location: /admin/recipes/create');
             exit;
         }
-
-        $data = [
+    
+        $recipes = new Recipes();
+        $existingRecipe = $recipes->findByProductId($_POST['product_id']);
+    
+        if ($existingRecipe) {
+            NotificationHelper::error('duplicate_recipe', 'Sản phẩm này đã có công thức, không thể thêm mới!');
+            header('location: /admin/recipes/create');
+            exit;
+        }
+    
+        $data_recipes = [
             'name' => $_POST['name'],
             'product_id' => $_POST['product_id'],
-            'materials_id' => $_POST['materials_id'], // Mảng
-            'quantity' => $_POST['quantity'], // Mảng
-            'unit' => $_POST['unit'], // Mảng
         ];
-
-        // Thêm công thức vào bảng `recipes`
-        $data_recipes = [
-            'name' => $data['name'],
-            'product_id' => $data['product_id'],
-        ];
-
-        $recipes = new Recipes();
+    
         $result_recipes = $recipes->createRecipes($data_recipes);
-        $recipes_id = $recipes->getMaxId(); // Lấy ID công thức vừa thêm
-
+        $recipes_id = $recipes->getMaxId();
+    
         if (!$result_recipes) {
             NotificationHelper::error('create_recipes', 'Thêm công thức thất bại');
             header('location: /admin/recipes/create');
             exit;
         }
-
-        // Thêm nhiều nguyên liệu vào bảng `ingredients`
+    
         $ingredientsModel = new Ingerdients();
         $data_ingredients = [];
-
-        foreach ($data['materials_id'] as $key => $material_id) {
+    
+        foreach ($_POST['materials_id'] as $key => $material_id) {
             $data_ingredients[] = [
-                'recipes_id'  =>  $recipes_id,
+                'recipes_id' => $recipes_id,
                 'materials_id' => $material_id,
-                'quantity'    => $data['quantity'][$key],
-                'unit'        => $data['unit'][$key],
+                'quantity' => $_POST['quantity'][$key],
+                'unit' => $_POST['unit'][$key],
             ];
         }
-       
-
-        $result = $ingredientsModel->create($data_ingredients); // Truyền mảng nhiều dòng
-
+    
+        $result = $ingredientsModel->create($data_ingredients);
+    
         if (!$result) {
             NotificationHelper::error('create_ingredient', 'Lỗi khi thêm nguyên liệu!');
             header('location: /admin/recipes/create');
             exit;
         }
-
+    
         NotificationHelper::success('create_success', 'Thêm công thức thành công!');
         header('location: /admin/recipes');
         exit;
     }
+    
 }

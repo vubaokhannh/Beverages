@@ -17,7 +17,7 @@ class Index extends BaseView
 
             <div class="container-xxl flex-grow-1 container-p-y">
                 <div class="card mb-3">
-                    <h5 class="card-header">Danh sách nguyên liệu</h5>
+                    <h5 class="card-header">Danh sách công thức</h5>
                     <div class="card-body">
                         <!-- Basic Breadcrumb -->
                         <nav aria-label="breadcrumb">
@@ -26,7 +26,7 @@ class Index extends BaseView
                                     <a href="javascript:void(0);">Dashboard</a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a href="javascript:void(0);">Danh sách nguyên liệu</a>
+                                    <a href="javascript:void(0);">Danh sách công thức</a>
                                 </li>
                             </ol>
                         </nav>
@@ -48,39 +48,40 @@ class Index extends BaseView
                         <table class="table">
                             <thead class="table-light">
                                 <tr>
-                                    <th style="width: 15px">Id</th>
-                                    <th>Tên</th>
-                                    <th style="width: 25%">Đơn vị tính</th>
-                                    <th style="width: 25%">Ngày tạo</th>
-
+                                    <th>Tên công thức</th>
+                                    <th>Tên món ăn</th>
+                                    <th>Thành phần</th>
                                     <th>Tùy chỉnh</th>
                                 </tr>
                             </thead>
                             <tbody class="table-border-bottom-0">
-                                <?php
-                                foreach ($data['material'] as $item):
-
-                                ?>
+                                <?php foreach ($data['recipes'] as $item): ?>
                                     <tr>
-
-                                        <td><?= $item['id'] ?></td>
-                                        <td><?= $item['name'] ?></td>
-                                        <td><?= $item['unit'] ?></td>
-                                        <td><?= $item['created_at'] ?></td>
+                                        <td><?= htmlspecialchars($item['name']) ?></td>
+                                        <td><?= htmlspecialchars($item['productName']) ?></td>
                                         <td>
-                                            <a href="/admin/materials/<?= $item['id'] ?>" class="btn btn-sm btn-primary">Sửa</a>
-                                            <form action="/admin/materials/delete/<?= $item['id'] ?>" method="post"
-                                                style="display: inline-block;">
-                                                <input type="hidden" name="method" value="DELETE" id="">
-                                                <button type="submit" class="btn btn-sm btn-danger">Xoá</button>
-                                            </form>
+                                            <ul>
+                                                <?php
+                                                $recipesId = $item['id'];
+                                                if (!empty($data['ingredientsByRecipe'][$recipesId])) { 
+                                                    foreach ($data['ingredientsByRecipe'][$recipesId] as $ingredient) {
+                                                        echo "<li>{$ingredient['quantity']} {$ingredient['unit']} {$ingredient['materialName']}</li>";
+                                                    }
+                                                } else {
+                                                    echo "<li>Không có nguyên liệu</li>";
+                                                }
+                                                ?>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <a href="/admin/recipes/edit/<?= $item['id'] ?>" class="btn btn-primary btn-sm">Sửa</a>
+                                            <a href="/admin/recipes/delete/<?= $item['id'] ?>" class="btn btn-danger btn-sm">Xóa</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
-
-
                             </tbody>
                         </table>
+
                     </div>
                 </div>
                 <!--/ Basic Bootstrap Table -->

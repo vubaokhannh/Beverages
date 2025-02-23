@@ -75,7 +75,6 @@ class Recipes extends BaseModel
             error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
             return $result;
         }
-        
     }
 
     public function search($keyword)
@@ -91,5 +90,38 @@ class Recipes extends BaseModel
         $sql = "SELECT MAX(id) as max_id FROM recipes";
         $result = $this->_conn->MySQLi()->query($sql)->fetch_assoc()['max_id'];
         return $result;
+    }
+
+    public function getAll()
+    {
+        $result = [];
+        try {
+            $sql = "SELECT recipes.*, products.name as productName FROM recipes
+            INNER JOIN products ON recipes.product_id = products.id";
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
+
+
+
+    public function findByProductId(int $product_id)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT * FROM recipes WHERE product_id=?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+
+            $stmt->bind_param('i', $product_id);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_assoc();
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
     }
 }

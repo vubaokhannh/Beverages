@@ -65,7 +65,7 @@ class Create extends BaseView
                             </div>
                             <div class="col-md-3">
                               <label class="control-label" for="date">Số lượng <span class="text-danger">*</span></label>
-                              <input class="form-control" name="quantity[]" type="number" placeholder="Số lượng">
+                              <input class="form-control" name="quantity[]" type="text" placeholder="Số lượng">
                             </div>
                             <div class="col-md-4">
                               <label class="control-label" for="date">Đơn vị <span class="text-danger">*</span></label>

@@ -116,7 +116,7 @@ class Ingerdients extends BaseModel
                 $sql = "INSERT INTO $this->table ($columns) VALUES ($values)";
             }
 
-          
+
 
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
@@ -124,6 +124,20 @@ class Ingerdients extends BaseModel
         } catch (\Throwable $th) {
             error_log('Lỗi khi thêm dữ liệu: ' . $th->getMessage());
             return false;
+        }
+    }
+
+    public function getAll()
+    {
+        $result = [];
+        try {
+            $sql = "SELECT ingerdients.*, materials.name as materialName FROM ingerdients
+            INNER JOIN materials ON ingerdients.materials_id  = materials.id";
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
+            return $result;
         }
     }
 }
