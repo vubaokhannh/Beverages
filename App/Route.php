@@ -97,7 +97,7 @@ public static function dispatch($uri)
     }
     // không khớp với route đã định nghĩa
     else {
-        header('Location: /notfound');
+        header('Location: /404');
     }
 }
 }
