@@ -98,4 +98,22 @@ class AuthHelper
             setcookie('user', '', time() - (3600 * 24 * 30 * 12), '/');
         }
     }
+
+    public static function middleware()
+    {
+        $admin = explode('/', string: $_SERVER['REQUEST_URI']);
+        $admin = $admin[1];
+        if ($admin === 'admin') {
+            if (!isset($_SESSION['user'])) {
+                NotificationHelper::error('admin', 'Vui lòng đăng nhập để thực hiện thao tác này');
+                header('Location: /login');
+                exit();
+            }
+            if ($_SESSION['user']['role'] != 1) {
+                NotificationHelper::error('admin', 'Tài khoản này không có quyền truy cập');
+                header('Location: /');
+                exit();
+            }
+        }
+    }
 }

@@ -10,6 +10,9 @@ use App\Route;
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
+use App\Helpers\AuthHelper;
+
+AuthHelper::middleware();
 
 $router = new Route();
 
