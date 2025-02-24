@@ -16,6 +16,13 @@ $router = new Route();
 
 Route::get('/', 'App\Controller\Client\HomeController@index');
 
+Route::get('/about', 'App\Controller\Client\AboutController@index');
+Route::get('/contact', 'App\Controller\Client\ContactController@index');
+Route::get('/post', 'App\Controller\Client\PostController@index');
+
+
+
+
 Route::get('/products', 'App\Controller\Client\ProductController@index');
 Route::get('/products/{id}', 'App\Controller\Client\ProductController@detail');
 Route::get('/products/categories/{id}', 'App\Controller\Client\ProductController@getProductByCategory');
@@ -39,6 +46,9 @@ Route::post('/register', 'App\Controller\Client\RegisterController@registerActio
 Route::get('/logout', 'App\Controller\Client\LoginController@logout');
 
 Route::get('/account/{id}', 'App\Controller\Client\AccountController@index');
+Route::get('/404', 'App\Controller\Client\ErrorsController@index');
+
+
 
 
 Route::get('/admin', 'App\Controller\Admin\DashboardController@index');
