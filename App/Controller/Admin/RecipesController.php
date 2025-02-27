@@ -31,18 +31,18 @@ class RecipesController
         $model = new Recipes();
         $recipes = $model->getAll();
 
-        // Lấy danh sách nguyên liệu
+      
         $model_ingredients = new Ingerdients();
         $ingredients = $model_ingredients->getAll();
 
-        // Nhóm nguyên liệu theo từng công thức
+    
         $ingredientsByRecipe = [];
         foreach ($ingredients as $ingredient) {
             $recipesId = $ingredient['recipes_id'];
             $ingredientsByRecipe[$recipesId][] = $ingredient;
         }
 
-        // Dữ liệu truyền vào view
+    
         $data = [
             'recipes' => $recipes,
             'ingredientsByRecipe' => $ingredientsByRecipe,

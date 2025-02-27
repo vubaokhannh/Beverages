@@ -46,9 +46,13 @@ class Create extends BaseView
                                             <label for="unit" class="form-label">Đơn vị tính<span class="text-danger"> *</span></label>
                                             <select name="unit" id="" class="select2 form-select">
                                                 <option value="">Chọn đơn vị tính</option>
-                                                <option value="1">Kg</option>
-                                                <option value="2">Gam</option>
-                                                <option value="3">Chai</option>
+                                                <option value="Kg">Kg</option>
+                                                <option value="Gam">Gam</option>
+                                                <option value="Chai">Chai</option>
+                                                <option value="Quả">Quả</option>
+                                                <option value="Lon">Lon</option>
+                                                <option value="Ml">Ml</option>
+                                                <option value="Hạt">Hạt</option>
                                             </select>
                                         </div>
                                         <div class="col-md-12">

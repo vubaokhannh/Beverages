@@ -63,14 +63,11 @@ class Index extends BaseView
                                             <ul>
                                                 <?php
                                                 $recipesId = $item['id'];
-                                                if (!empty($data['ingredientsByRecipe'][$recipesId])) { 
-                                                    foreach ($data['ingredientsByRecipe'][$recipesId] as $ingredient) {
-                                                        echo "<li>{$ingredient['quantity']} {$ingredient['unit']} {$ingredient['materialName']}</li>";
-                                                    }
-                                                } else {
-                                                    echo "<li>Không có nguyên liệu</li>";
-                                                }
+                                                foreach ($data['ingredientsByRecipe'][$recipesId] as $ingredient):
                                                 ?>
+                                                <li><?= $ingredient['quantity']?> <?= $ingredient['unit']?> <?= $ingredient['materialName']?></li>
+                                                
+                                                <?php endforeach;?>
                                             </ul>
                                         </td>
                                         <td>

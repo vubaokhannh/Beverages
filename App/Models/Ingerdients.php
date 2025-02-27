@@ -97,7 +97,7 @@ class Ingerdients extends BaseModel
     {
         try {
             if (isset($data[0]) && is_array($data[0])) {
-                // Nếu dữ liệu là một mảng nhiều dòng
+
                 $columns = implode(", ", array_keys($data[0]));
                 $values = [];
 
@@ -110,7 +110,7 @@ class Ingerdients extends BaseModel
 
                 $sql = "INSERT INTO $this->table ($columns) VALUES " . implode(", ", $values);
             } else {
-                // Nếu dữ liệu chỉ là một dòng
+
                 $columns = implode(", ", array_keys($data));
                 $values = implode(", ", array_map(fn($value) => "'" . addslashes($value) . "'", array_values($data)));
                 $sql = "INSERT INTO $this->table ($columns) VALUES ($values)";
