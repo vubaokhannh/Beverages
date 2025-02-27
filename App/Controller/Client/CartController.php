@@ -90,8 +90,12 @@ class CartController
 
     public static function update()
     {
+
+       
         $product_id = $_POST['id'];
         $quantity = $_POST['quantity'];
+
+      
 
         if (isset($_COOKIE['cart'])) {
 
@@ -121,6 +125,7 @@ class CartController
         }
 
         $product_data = json_encode($cart_data);
+      
 
         setcookie('cart', $product_data, time() + 3600 * 24 * 30 * 12, '/');
 

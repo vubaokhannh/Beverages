@@ -21,7 +21,7 @@ class HomeController
     public function index()
     {
         $model = new Product();
-        $products = $model->getAll();
+        $products = $model->getAllByStatus();
 
         $data = [
             'products' => $products,

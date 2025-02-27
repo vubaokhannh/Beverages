@@ -36,6 +36,8 @@ class Header extends BaseView
             <link rel="stylesheet" href="/public/assets/client/css/owl.carousel.min.css" type="text/css">
             <link rel="stylesheet" href="/public/assets/client/css/slicknav.min.css" type="text/css">
             <link rel="stylesheet" href="/public/assets/client/css/style.css" type="text/css">
+           
+
         </head>
 
         <body>

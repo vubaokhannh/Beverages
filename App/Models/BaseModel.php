@@ -34,23 +34,23 @@ abstract class BaseModel implements CrudInterface
             return $result;
         }
     }
-    public function getAll_(int $transport, int $user_id)
-    {
-        $result = [];
-        try {
-            $sql = "SELECT orders.id, orders.total, orders.orderStatus, orders.date, orders.paymentMethod, orders.user_id , orders.transport
-                FROM orders 
-                WHERE orders.user_id = ? AND orders.transport = ?";
-            $conn = $this->_conn->MySQLi();
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param('ii', $transport, $user_id);
-            $stmt->execute();
-            return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-        } catch (\Throwable $th) {
-            error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
-            return $result;
-        }
-    }
+    // public function getAll_(int $transport, int $user_id)
+    // {
+    //     $result = [];
+    //     try {
+    //         $sql = "SELECT orders.id, orders.total, orders.orderStatus, orders.date, orders.paymentMethod, orders.user_id , orders.transport
+    //             FROM orders 
+    //             WHERE orders.user_id = ? AND orders.transport = ?";
+    //         $conn = $this->_conn->MySQLi();
+    //         $stmt = $conn->prepare($sql);
+    //         $stmt->bind_param('ii', $transport, $user_id);
+    //         $stmt->execute();
+    //         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    //     } catch (\Throwable $th) {
+    //         error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
+    //         return $result;
+    //     }
+    // }
 
     public function getOne(int $id)
     {

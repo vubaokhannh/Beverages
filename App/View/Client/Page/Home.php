@@ -78,13 +78,13 @@ class Home extends BaseView
                                 <div class="featured__item__pic set-bg" data-setbg="/public/uploads/products/<?= $item['img'] ?>">
                                     <ul class="featured__item__pic__hover">
                                         <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="/products/<?= $item["id"]?>"><i class="fa fa-retweet"></i></a></li>
+                                        <li><a href="/products/<?= $item["id"] ?>"><i class="fa fa-retweet"></i></a></li>
                                         <li><a href="/cart"><i class="fa fa-shopping-cart"></i></a></li>
                                     </ul>
                                 </div>
                                 <div class="featured__item__text">
-                                    <h6><a href="/products/<?= $item["id"]?>"><?= $item["name"]?></a></h6>
-                                    <h5><?= number_format($item["price"])?></h5>
+                                    <h6><a href="/products/<?= $item["id"] ?>"><?= $item["name"] ?></a></h6>
+                                    <h5><?= number_format($item["price"]) ?> VNĐ</h5>
                                 </div>
                             </div>
                         </div>
@@ -483,6 +483,8 @@ class Home extends BaseView
                 </div>
             </div>
         </section>
+
+        
 <?php
 
     }

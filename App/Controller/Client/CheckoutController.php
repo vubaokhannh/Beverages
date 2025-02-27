@@ -7,6 +7,9 @@ use App\View\Client\Layouts\Footer;
 use App\View\Client\Layouts\Header;
 
 use App\View\Client\Page\Cart\Checkout;
+use App\View\Client\Page\Cart\Qr;
+
+
 
 use App\Helpers\NotificationHelper;
 use App\Models\Product;
@@ -27,6 +30,7 @@ class CheckoutController
 
     public static function checkout()
     {
+        
         $is_login = AuthHelper::checkLogin();
         if (isset($_COOKIE['cart']) && $is_login) {
 
@@ -56,10 +60,7 @@ class CheckoutController
 
                 header('location: /products');
             }
-        } else {
-            NotificationHelper::error('checkout', 'Vui lòng đăng nhập hoặc thêm sản phẩm vào giỏ hàng để thanh toán');
-            header('location: /login');
-        }
+        } 
     }
 
 
@@ -70,33 +71,33 @@ class CheckoutController
             header('location: /');
             exit();
         }
-    
+
         $product = new Product();
         $cookie_data = $_COOKIE['cart'];
         $cart_data = json_decode($cookie_data, true);
-    
+
         if (empty($cart_data)) {
             NotificationHelper::error('cart', 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào');
             header('location: /');
             exit();
         }
-    
+
         foreach ($cart_data as $key => $value) {
             $product_id = $value['product_id'];
             $result = $product->getOneProduct($product_id);
-    
+
             if (!$result) {
                 NotificationHelper::error('cart', 'Sản phẩm không tồn tại!');
                 header('location: /cart');
                 exit();
             }
-    
+
             $cart_data[$key]['data'] = $result;
         }
-    
+
         return $cart_data;
     }
-    
+
     public static function order()
     {
         $is_login = AuthHelper::checkLogin();
@@ -116,6 +117,9 @@ class CheckoutController
                 'address' => $_POST['address'],
                 'email' =>  $_POST['email'],
                 'total' => $_POST['total'],
+                // 'province' => $_POST['province'],
+                // 'district' => $_POST['district'],
+                // 'ward' => $_POST['ward'],
                 'payment_method_id' => $_POST['payment_method'],
                 'user_id' =>  $_SESSION['user']['id'],
             ];
@@ -124,7 +128,7 @@ class CheckoutController
                 $order = new Order;
                 $order_data = $order->createorder($data);
                 $order_id = $order->getMaxId();
-          
+
                 if ($order_data) {
                     foreach ($cart_data as $item) {
                         $orderDetailData = [
@@ -133,7 +137,7 @@ class CheckoutController
                             'quantity' => $item['quantity'],
                             'price' => $item['data']['price'],
                         ];
-                      
+
                         $orderDetail = new OrderDetail;
                         $orderDetailData =  $orderDetail->create($orderDetailData);
                     }
@@ -142,11 +146,40 @@ class CheckoutController
                 NotificationHelper::success('cart', 'Đặt hàng thành công');
                 header('location: /');
                 exit();
-            } else($_POST['payment_method'] === '1');
-   
+            }
+            if ($_POST['payment_method'] === '1') {
+                $_SESSION['qr'] = "https://api.vietqr.io/image/970403-070143043221-fmpz3mv.jpg?accountName=VU%20BAO%20KHANH&amount=" . $data['total'];
+                $order = new Order;
+                $order_data = $order->createorder($data);
+                $order_id = $order->getMaxId();
+                if ($order_data) {
+                    foreach ($cart_data as $item) {
+                        $orderDetailData = [
+                            'order_id' => $order_id,
+                            'product_id' => $item['product_id'],
+                            'quantity' => $item['quantity'],
+                            'price' => $item['data']['price'],
+                        ];
+
+                        $orderDetail = new OrderDetail;
+                        $orderDetailData =  $orderDetail->create($orderDetailData);
+
+                        // self::deductMaterials($item['product_id'], $item['quantity']);
+                    }
+                }
+                setcookie('cart', '', time() - (3600 * 24 * 30 * 12), '/');
+                NotificationHelper::success('cart', 'Đặt hàng thành công');
+                header('location: /qr');
+                exit();
+            }
         } else {
             NotificationHelper::error('cart', 'Vui lòng đăng nhập để thực hiện chức năng này');
             header('location: /');
         }
+    }
+
+
+    public function qr(){
+        Qr::render();
     }
 }

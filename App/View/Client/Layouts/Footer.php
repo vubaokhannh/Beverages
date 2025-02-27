@@ -90,6 +90,11 @@ class Footer extends BaseView
         <script src="/public/assets/client/js/mixitup.min.js"></script>
         <script src="/public/assets/client/js/owl.carousel.min.js"></script>
         <script src="/public/assets/client/js/main.js"></script>
+        <script src="/public/assets/client/js/cart.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>;
+
+        <!-- <script src="/public/assets/client/js/api.js"></script> -->
+
 
 
 

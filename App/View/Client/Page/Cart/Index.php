@@ -47,12 +47,11 @@ class Index extends BaseView
                                 <tbody>
                                     <?php
                                     $total_price = 0;
-                                    $i = 0;
                                     foreach ($data as $cart):
                                         if ($cart['data']):
-                                            $unit_price = $cart['quantity'] * ($cart['data']['price']);
-                                            $total_price += $unit_price;
-                                            $i++;
+                                            $unit_price = $cart['data']['price'];
+                                            $subtotal = $unit_price * $cart['quantity'];
+                                            $total_price += $subtotal;
                                     ?>
                                             <tr>
                                                 <td class="shoping__cart__item">
@@ -60,34 +59,23 @@ class Index extends BaseView
                                                     <h5><?= $cart['data']['name'] ?></h5>
                                                 </td>
                                                 <td class="shoping__cart__price">
-                                                    <?= number_format($cart['data']['price']) ?>
-                                                    VNĐ
+                                                    <?= number_format($unit_price) ?> VNĐ
                                                 </td>
                                                 <td class="shoping__cart__quantity">
                                                     <div class="quantity">
                                                         <div class="pro-qty">
-                                                            <form action="/cart/update" method="post">
-                                                                <input type="hidden" name="method" value="PUT">
-                                                                <input type="hidden" name="id" value="<?= $cart['data']['id'] ?>">
-                                                                <input type="hidden" name="update-cart-item">
-                                                                <div class="quantity-control">
-                                                                    <input type="button" class="dec qtybtn" value="-" onclick="decreaseQuantity(this)">
-                                                                    <input type="text" name="quantity" value="<?= $cart['quantity'] ?>"
-                                                                        onchange="this.form.submit()" min="1">
-                                                                    <input type="button" class="inc qtybtn" value="+" onclick="increaseQuantity(this)">
-                                                                </div>
-                                                            </form>
+                                                            <div class="quantity-control">
+                                                                <input type="number" name="quantity" value="<?= $cart['quantity'] ?>" data-id="<?= $cart['data']['id'] ?>" data-price="<?= $unit_price ?>" onchange="manualUpdateQuantity(this)" min="1">
+                                                            </div>
                                                         </div>
                                                     </div>
-
                                                 </td>
                                                 <td class="shoping__cart__total">
-                                                    <?= number_format($unit_price) ?>
-                                                    VNĐ
+                                                    <span class="subtotal"><?= number_format($subtotal) ?></span> VNĐ
                                                 </td>
                                                 <td class="shoping__cart__item__close">
                                                     <form action="cart/delete" method="post">
-                                                        <input type="hidden" name="method" id="" value="DELETE">
+                                                        <input type="hidden" name="method" value="DELETE">
                                                         <input type="hidden" name="id" value="<?= $cart['data']['id'] ?>">
                                                         <button type="submit" class="icon_close border-0"></button>
                                                     </form>
@@ -97,7 +85,6 @@ class Index extends BaseView
                                         endif;
                                     endforeach;
                                     ?>
-
                                 </tbody>
                             </table>
                         </div>
@@ -126,7 +113,7 @@ class Index extends BaseView
                         <div class="shoping__checkout">
                             <h5>Tổng số </h5>
                             <ul>
-                                <!-- <li>Tổng phụ <span>$454.98</span></li> -->
+
                                 <li>Tổng <span><?= number_format($total_price) ?> VNĐ</span></li>
                             </ul>
                             <a href="/checkout" class="primary-btn">Thanh toán</a>
@@ -135,6 +122,8 @@ class Index extends BaseView
                 </div>
             </div>
         </section>
+       
+
 
 <?php
 
