@@ -116,4 +116,15 @@ class AuthHelper
             }
         }
     }
+
+    public static function checkExistedInfo($column, $info)
+    {
+        $User = new User();
+        $result =$User->getOneUserByInfo($column, $info);
+        if (empty($result)) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
 }

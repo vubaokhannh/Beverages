@@ -4,6 +4,8 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 require_once "vendor/autoload.php";
+require_once "config.php";
+
 
 use App\Route;
 
@@ -34,14 +36,20 @@ Route::get('/products/categories/{id}', 'App\Controller\Client\ProductController
 
 Route::get('/cart', 'App\Controller\Client\CartController@index');
 Route::post('/cart/add', 'App\Controller\Client\CartController@add');
-Route::put('/cart/update', 'App\Controller\Client\CartController@update');
+Route::post('/cart/update', 'App\Controller\Client\CartController@update');
 Route::delete('/cart/delete', 'App\Controller\Client\CartController@deleteItem');
 
 Route::get('/checkout', 'App\Controller\Client\CheckoutController@checkout');
+Route::get('/qr', 'App\Controller\Client\CheckoutController@qr');
+
 Route::post('/order', 'App\Controller\Client\CheckoutController@order');
 
 Route::get('/login', 'App\Controller\Client\LoginController@Login');
 Route::post('/login', 'App\Controller\Client\LoginController@loginAction');
+
+Route::get('/login-google', 'App\Controller\Client\GoogleController@loginGoogle');
+Route::get('/login-googleAction', 'App\Controller\Client\GoogleController@callbackGoogle');
+
 
 Route::get('/register', 'App\Controller\Client\RegisterController@register');
 Route::post('/register', 'App\Controller\Client\RegisterController@registerAction');

@@ -25,7 +25,7 @@ class Register extends BaseView
             </div>
         </section>
 
-        <section>
+        <!-- <section>
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 offset-lg-3">
@@ -53,6 +53,45 @@ class Register extends BaseView
                                     <button type="submit" class="site-btn">Đăng ký</button>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+
+        <section>
+            <div class="container py-5 h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                        <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                            <form action="/register" method="post">
+                                <input type="hidden" name="method" value="POST">
+
+                                <div class="card-body p-5 ">
+                                    <div data-mdb-input-init class="form-outline mb-4">
+                                        <label class="form-label" for="name">Họ và Tên</label>
+                                        <input type="text" id="name" class="form-control form-control-lg" name="name" />
+                                    </div>
+                                    <div data-mdb-input-init class="form-outline mb-4">
+                                        <label class="form-label" for="email">Email</label>
+                                        <input type="email" id="email" class="form-control form-control-lg" name="email" />
+                                    </div>
+
+                                    <div data-mdb-input-init class="form-outline mb-4">
+                                        <label class="form-label" for="password">Mật khẩu</label>
+                                        <input type="password" id="password" class="form-control form-control-lg" name="password" />
+                                    </div>
+                                    <div data-mdb-input-init class="form-outline mb-4">
+                                        <label class="form-label" for="re_password">Nhập lại mật khẩu</label>
+                                        <input type="password" id="re_password" class="form-control form-control-lg" name="re_password" />
+                                    </div>
+
+
+
+                                    <a  class="btn site-btn btn-lg btn-block" type="submit">Đăng ký</a>
+                                </div>
+                            </form>
+
                         </div>
                     </div>
                 </div>
