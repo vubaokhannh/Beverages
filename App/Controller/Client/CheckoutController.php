@@ -15,6 +15,9 @@ use App\Helpers\NotificationHelper;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\Recipes;
+
+
 
 
 use App\View\Client\Components\Notification;
@@ -30,7 +33,7 @@ class CheckoutController
 
     public static function checkout()
     {
-        
+
         $is_login = AuthHelper::checkLogin();
         if (isset($_COOKIE['cart']) && $is_login) {
 
@@ -60,7 +63,7 @@ class CheckoutController
 
                 header('location: /products');
             }
-        } 
+        }
     }
 
 
@@ -140,6 +143,7 @@ class CheckoutController
 
                         $orderDetail = new OrderDetail;
                         $orderDetailData =  $orderDetail->create($orderDetailData);
+                        self::deductMaterials($cart_data);
                     }
                 }
                 setcookie('cart', '', time() - (3600 * 24 * 30 * 12), '/');
@@ -164,7 +168,7 @@ class CheckoutController
                         $orderDetail = new OrderDetail;
                         $orderDetailData =  $orderDetail->create($orderDetailData);
 
-                        // self::deductMaterials($item['product_id'], $item['quantity']);
+                        self::deductMaterials($item['product_id'], $item['quantity']);
                     }
                 }
                 setcookie('cart', '', time() - (3600 * 24 * 30 * 12), '/');
@@ -179,7 +183,31 @@ class CheckoutController
     }
 
 
-    public function qr(){
+    public function qr()
+    {
         Qr::render();
+    }
+
+    private static function deductMaterials($cart)
+    {
+        $results = [];
+
+        foreach ($cart as $item) {
+            $results[] = [  // Thêm vào mảng thay vì ghi đè
+                'product_id' => $item['product_id'],
+                'quantity' => $item['quantity']
+            ];
+        }
+
+        // var_dump($results);  // In ra danh sách đầy đủ
+
+        $recipes = new Recipes();
+
+        foreach ($results as $result) {
+            $recipe_data = $recipes->findByProductId($result['product_id']);
+            var_dump($recipe_data); // Debug từng sản phẩm
+        }
+
+        die;
     }
 }
