@@ -1,10 +1,19 @@
 composer.phar
 /vendor/
 composer.lock
-composer.json
 
+composer.lock
 
-### Ampps ###
+/logs/php/php-errors.log
+
 cgi-bin
 
 .env
+
+.env.example
+
+node_modules
+
+package-lock.json
+
+package.json
