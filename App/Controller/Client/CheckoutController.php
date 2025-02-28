@@ -117,6 +117,12 @@ class CheckoutController
             }
 
             $cart_data = self::getorder();
+            $check_materials = self::deductMaterials($cart_data, true);
+            if (!$check_materials) {
+                NotificationHelper::error('cart', 'Nguyên liệu không đủ, đặt hàng thất bại');
+                header('location: /checkout');
+                exit();
+            }
 
             $data = [
                 'name' => $_POST['name'],
@@ -147,7 +153,7 @@ class CheckoutController
 
                         $orderDetail = new OrderDetail;
                         $orderDetailData =  $orderDetail->create($orderDetailData);
-                        self::deductMaterials($cart_data);
+                        self::deductMaterials($cart_data, false);
                     }
                 }
                 setcookie('cart', '', time() - (3600 * 24 * 30 * 12), '/');
@@ -172,7 +178,7 @@ class CheckoutController
                         $orderDetail = new OrderDetail;
                         $orderDetailData =  $orderDetail->create($orderDetailData);
 
-                        self::deductMaterials($cart_data);
+                        self::deductMaterials($cart_data, false);
                     }
                 }
                 setcookie('cart', '', time() - (3600 * 24 * 30 * 12), '/');
@@ -187,62 +193,71 @@ class CheckoutController
     }
 
 
-    public function qr()
-    {
-        Qr::render();
-    }
 
-    public static function deductMaterials($cart)
+
+    public static function deductMaterials($cart, $check_only = false)
     {
         $recipes = new Recipes();
         $ingredients = new Ingerdients();
         $inventory = new Inventory();
-
+    
         foreach ($cart as $item) {
             $product_id = $item['product_id'];
             $product_quantity = $item['quantity'];
-
+    
             $recipe_data = $recipes->findByProductId($product_id);
-
             if (isset($recipe_data['id'])) {
                 $recipe_data = [$recipe_data];
             }
-
+    
             foreach ($recipe_data as $recipe) {
-
                 $ingredients_data = $ingredients->findByIngredientId((int) $recipe['id']);
-
                 if (isset($ingredients_data['id'])) {
                     $ingredients_data = [$ingredients_data];
                 }
-
+    
                 foreach ($ingredients_data as $ingredient) {
                     $required_quantity = $ingredient['quantity'] * $product_quantity;
-
                     $inventory_data = $inventory->findByMaterialId($ingredient['materials_id']);
-
+    
                     if (isset($inventory_data['id'])) {
                         $inventory_data = [$inventory_data];
                     }
-
-
+    
+                    $total_available = array_sum(array_column($inventory_data, 'quantity'));
+    
+                    if ($total_available < $required_quantity) {
+                        return false;
+                    }
+                }
+    
+                if ($check_only) {
+                    continue;
+                }
+    
+                foreach ($ingredients_data as $ingredient) {
+                    $required_quantity = $ingredient['quantity'] * $product_quantity;
+                    $inventory_data = $inventory->findByMaterialId($ingredient['materials_id']);
+    
+                    if (isset($inventory_data['id'])) {
+                        $inventory_data = [$inventory_data];
+                    }
+    
                     foreach ($inventory_data as &$inventory_item) {
                         if ($inventory_item['quantity'] >= $required_quantity) {
-
                             $inventory_item['quantity'] -= $required_quantity;
-
                             $inventory->updateMaterialQuantity($inventory_item['id'], ['quantity' => $inventory_item['quantity']]);
-
-                            $required_quantity = 0;
+                            break;
                         }
-                    }
-
-                    if ($required_quantity > 0) {
-                        NotificationHelper::error('required_quantity', 'Nguyên liệu không đủ để thực hiện ');
-                        return false;
                     }
                 }
             }
         }
+        return true;
+    }
+
+    public function qr()
+    {
+        Qr::render();
     }
 }
