@@ -118,6 +118,7 @@ class Inventory extends BaseModel
             $sql = "UPDATE inventory SET quantity = ? WHERE material_id = ?";
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
+           
 
             if (!$stmt) {
                 throw new \Exception("Lỗi prepare statement: " . $conn->error);
@@ -128,10 +129,51 @@ class Inventory extends BaseModel
             if (!$stmt->execute()) {
                 throw new \Exception("Lỗi khi cập nhật dữ liệu: " . $stmt->error);
             }
+        
 
             return true;
         } catch (\Throwable $th) {
             error_log('Lỗi khi cập nhật dữ liệu: ' . $th->getMessage());
+            return false;
+        }
+    }
+
+    public function findByMaterialId(int $materials_id)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT * FROM inventory WHERE material_id = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+    
+            $stmt->bind_param('i', $materials_id);
+            $stmt->execute();
+    
+            $data = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    
+            return $data ?: []; // Trả về mảng rỗng nếu không có dữ liệu
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
+
+    public function updateMaterialQuantity(int $id, array $data)
+    {
+        try {
+            $sql = "UPDATE inventory SET ";
+            foreach ($data as $key => $value) {
+                $sql .= "$key = '$value', ";
+            }
+            $sql = rtrim($sql, ", ");
+
+            $sql .= " WHERE $this->id=$id";
+
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+            return $stmt->execute();
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi cập nhật dữ liệu: ', $th->getMessage());
             return false;
         }
     }

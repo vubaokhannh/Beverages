@@ -140,4 +140,25 @@ class Ingerdients extends BaseModel
             return $result;
         }
     }
+
+    public function findByIngredientId(int $recipes_id)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT * FROM ingerdients WHERE recipes_id = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+    
+            $stmt->bind_param('i', $recipes_id);
+            $stmt->execute();
+    
+            $data = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    
+            return $data ?: []; // Trả về mảng rỗng nếu không có dữ liệu
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
+    
 }

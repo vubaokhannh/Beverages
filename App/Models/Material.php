@@ -85,27 +85,29 @@ class Material extends BaseModel
     }
 
     public function checkNameAndUnit($name, $unit)
-  {
-    $result = [];
-    try {
-      $sql = "SELECT * FROM materials WHERE name=? AND unit=?";
-      $conn = $this->_conn->MySQLi();
-      $stmt = $conn->prepare($sql);
+    {
+        $result = [];
+        try {
+            $sql = "SELECT * FROM materials WHERE name=? AND unit=?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
 
-      $stmt->bind_param('ss', $name, $unit);
-      $stmt->execute();
-      return $stmt->get_result()->fetch_assoc();
-    } catch (\Throwable $th) {
-      error_log('Lỗi khi lấy bằng tên: ' . $th->getMessage());
-      return $result;
+            $stmt->bind_param('ss', $name, $unit);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_assoc();
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi lấy bằng tên: ' . $th->getMessage());
+            return $result;
+        }
     }
-  }
 
-  public function getMaxId()
-  {
-      $result = 0;
-      $sql = "SELECT MAX(id) as max_id FROM materials";
-      $result = $this->_conn->MySQLi()->query($sql)->fetch_assoc()['max_id'];
-      return $result;
-  }
+    public function getMaxId()
+    {
+        $result = 0;
+        $sql = "SELECT MAX(id) as max_id FROM materials";
+        $result = $this->_conn->MySQLi()->query($sql)->fetch_assoc()['max_id'];
+        return $result;
+    }
+
+   
 }

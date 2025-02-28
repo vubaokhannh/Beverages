@@ -16,6 +16,10 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Recipes;
+use App\Models\Ingerdients;
+use App\Models\Inventory;
+
+
 
 
 
@@ -168,7 +172,7 @@ class CheckoutController
                         $orderDetail = new OrderDetail;
                         $orderDetailData =  $orderDetail->create($orderDetailData);
 
-                        self::deductMaterials($item['product_id'], $item['quantity']);
+                        self::deductMaterials($cart_data);
                     }
                 }
                 setcookie('cart', '', time() - (3600 * 24 * 30 * 12), '/');
@@ -188,26 +192,57 @@ class CheckoutController
         Qr::render();
     }
 
-    private static function deductMaterials($cart)
+    public static function deductMaterials($cart)
     {
-        $results = [];
+        $recipes = new Recipes();
+        $ingredients = new Ingerdients();
+        $inventory = new Inventory();
 
         foreach ($cart as $item) {
-            $results[] = [  // Thêm vào mảng thay vì ghi đè
-                'product_id' => $item['product_id'],
-                'quantity' => $item['quantity']
-            ];
+            $product_id = $item['product_id'];
+            $product_quantity = $item['quantity'];
+
+            $recipe_data = $recipes->findByProductId($product_id);
+
+            if (isset($recipe_data['id'])) {
+                $recipe_data = [$recipe_data];
+            }
+
+            foreach ($recipe_data as $recipe) {
+
+                $ingredients_data = $ingredients->findByIngredientId((int) $recipe['id']);
+
+                if (isset($ingredients_data['id'])) {
+                    $ingredients_data = [$ingredients_data];
+                }
+
+                foreach ($ingredients_data as $ingredient) {
+                    $required_quantity = $ingredient['quantity'] * $product_quantity;
+
+                    $inventory_data = $inventory->findByMaterialId($ingredient['materials_id']);
+
+                    if (isset($inventory_data['id'])) {
+                        $inventory_data = [$inventory_data];
+                    }
+
+
+                    foreach ($inventory_data as &$inventory_item) {
+                        if ($inventory_item['quantity'] >= $required_quantity) {
+
+                            $inventory_item['quantity'] -= $required_quantity;
+
+                            $inventory->updateMaterialQuantity($inventory_item['id'], ['quantity' => $inventory_item['quantity']]);
+
+                            $required_quantity = 0;
+                        }
+                    }
+
+                    if ($required_quantity > 0) {
+                        NotificationHelper::error('required_quantity', 'Nguyên liệu không đủ để thực hiện ');
+                        return false;
+                    }
+                }
+            }
         }
-
-        // var_dump($results);  // In ra danh sách đầy đủ
-
-        $recipes = new Recipes();
-
-        foreach ($results as $result) {
-            $recipe_data = $recipes->findByProductId($result['product_id']);
-            var_dump($recipe_data); // Debug từng sản phẩm
-        }
-
-        die;
     }
 }
