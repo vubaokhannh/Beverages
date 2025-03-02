@@ -6,9 +6,13 @@ use App\View\Client\Layouts\Footer;
 use App\View\Client\Layouts\Header;
 
 use App\View\Client\Page\Account\Index;
+use App\View\Client\Page\Account\Order as OrderDetailHis;
+
 
 use App\Models\User;
 use App\Models\Order;
+use App\Models\OrderDetail;
+
 
 const DONHANGCHOXYLY = '0';
 const DONHANGDADAT = '1';
@@ -42,6 +46,28 @@ class AccountController
 
         Header::render();
         Index::render($data);
+        Footer::render();
+    }
+
+
+    public function order($id)
+    {
+
+        $model = new Order();
+        $order = $model->getOneorder($id);
+
+        $order_details = new OrderDetail();
+
+        $order_details_data = $order_details->getAllOrderDetailByOrderId($order['id']);
+        
+
+
+        $data = [
+            'order' => $order,
+            'order_details' => $order_details_data,
+        ];
+        Header::render();
+        OrderDetailHis::render($data);
         Footer::render();
     }
 }

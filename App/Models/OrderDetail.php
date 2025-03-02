@@ -11,7 +11,7 @@ class OrderDetail extends BaseModel
     {
         return $this->getAll();
     }
-  
+
     public function getOneorderDetail($id)
     {
         return $this->getOne($id);
@@ -62,7 +62,7 @@ class OrderDetail extends BaseModel
 
             $sql .= ")";
             // INSERT INTO $this->table (name, description, status) VALUES ('category test', 'category test description', '1')
-      
+
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
 
@@ -72,5 +72,20 @@ class OrderDetail extends BaseModel
             return false;
         }
     }
-   
+
+    public function getAllOrderDetailByOrderId($id)
+    {
+        // $this->_conn = new Database();
+
+
+        $sql = "SELECT order_details.*, products.name AS pro_name , products.img AS pro_img 
+            FROM order_details INNER JOIN products ON order_details.product_id = products.id 
+            WHERE order_details.order_id =? ";
+        $conn = $this->_conn->MySQLi();
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
 }

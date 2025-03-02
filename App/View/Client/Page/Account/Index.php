@@ -148,7 +148,7 @@ class Index extends BaseView
                                                                     </td>
                                                                     <td>
 
-                                                                        <a href="/admin/order/detail/<?= $orders_0['id'] ?>"
+                                                                        <a href="/account/orderDetail/<?= $orders_0['id'] ?>"
                                                                             class="btn btn-sm btn-primary">Xem chi tiết</a>
 
                                                                         </a>
@@ -216,7 +216,7 @@ class Index extends BaseView
                                                                     </td>
                                                                     <td>
 
-                                                                        <a href="/admin/order/detail/<?= $orders_1['id'] ?>"
+                                                                        <a href="/account/orderDetail/<?= $orders_1['id'] ?>"
                                                                             class="btn btn-sm btn-primary">Xem chi tiết</a>
 
                                                                         </a>
@@ -244,9 +244,6 @@ class Index extends BaseView
                                                                 <th>Trạng thái</th>
                                                                 <th></th>
                                                             </tr>
-
-
-
                                                         </thead>
                                                         <tbody>
                                                             <?php
@@ -282,7 +279,7 @@ class Index extends BaseView
                                                                     </td>
                                                                     <td>
 
-                                                                        <a href="/admin/order/detail/<?= $orders_2['id'] ?>"
+                                                                        <a href="/account/orderDetail/<?= $orders_2['id'] ?>"
                                                                             class="btn btn-sm btn-primary">Xem chi tiết</a>
 
                                                                         </a>

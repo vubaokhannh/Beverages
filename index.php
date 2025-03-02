@@ -57,6 +57,8 @@ Route::post('/register', 'App\Controller\Client\RegisterController@registerActio
 Route::get('/logout', 'App\Controller\Client\LoginController@logout');
 
 Route::get('/account/{id}', 'App\Controller\Client\AccountController@index');
+Route::get('/account/orderDetail/{id}', 'App\Controller\Client\AccountController@order');
+
 Route::get('/404', 'App\Controller\Client\ErrorsController@index');
 
 
