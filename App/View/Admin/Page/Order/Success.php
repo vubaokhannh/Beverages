@@ -4,7 +4,7 @@ namespace App\View\Admin\Page\Order;
 
 use App\View\BaseView;
 
-class Index extends BaseView
+class Success extends BaseView
 {
     public static function render($data = null)
     {
@@ -71,14 +71,7 @@ class Index extends BaseView
                                     <td>
                                         <a href="" class="btn btn-sm btn-primary">Chi tiết</a>
                                     </td>
-                                    <td>
-                                        <form action="/admin/orders/identify" method="post" >
-                                            <input type="hidden" name="method" value="PUT">
-                                            <input type="hidden" name="id" value="<?= $item['id'] ?>">
-                                            <button class="btn btn-sm btn-primary">Xác nhận</button>
-                                        </form>
-
-                                    </td>
+                                   
                                 </tr>
                             <?php endforeach; ?>
 

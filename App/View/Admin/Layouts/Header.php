@@ -64,7 +64,7 @@ class Header extends BaseView
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
             <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 
-       
+
             <!-- Bootstrap Icons -->
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
             <!-- jQuery -->
@@ -248,7 +248,7 @@ class Header extends BaseView
                             </li>
 
 
-                            <li class="menu-item  <?= in_array($currentPath, $adminOrder) ? 'active open' : '' ?>">
+                            <li class="menu-item  <?= strpos($currentPath, '/admin/orders') === 0 ? 'active open' : '' ?>">
                                 <a href="javascript:void(0)" class="menu-link menu-toggle">
                                     <i class="menu-icon tf-icons bx bx-box"></i>
                                     <div class="text-truncate" data-i18n="User interface">Đơn hàng</div>
@@ -256,7 +256,23 @@ class Header extends BaseView
                                 <ul class="menu-sub">
                                     <li class="menu-item <?= $currentPath == '/admin/orders' ? 'active' : '' ?>">
                                         <a href="/admin/orders" class="menu-link">
-                                            <div class="text-truncate" data-i18n="Carousel">Tất cả </div>
+                                            <div class="text-truncate" data-i18n="Carousel">ĐH chờ xử lý </div>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                                <ul class="menu-sub">
+                                    <li class="menu-item <?= $currentPath == '/admin/orders/transport' ? 'active' : '' ?>">
+                                        <a href="/admin/orders/transport" class="menu-link">
+                                            <div class="text-truncate" data-i18n="Carousel">ĐH đang vận chuyển </div>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                                <ul class="menu-sub">
+                                    <li class="menu-item <?= $currentPath == '/admin/orders/success' ? 'active' : '' ?>">
+                                        <a href="/admin/orders/success" class="menu-link">
+                                            <div class="text-truncate" data-i18n="Carousel">ĐH giao thành công </div>
                                         </a>
                                     </li>
 

@@ -98,6 +98,15 @@ Route::put('/admin/materials/update/{id}', 'App\Controller\Admin\MaterialControl
 Route::delete('/admin/materials/delete/{id}', 'App\Controller\Admin\MaterialController@delete');
 
 Route::get('/admin/orders', 'App\Controller\Admin\OrderController@index');
+Route::put('/admin/orders/identify', 'App\Controller\Admin\OrderController@identify');
+Route::get('/admin/orders/transport', 'App\Controller\Admin\OrderController@transport');
+Route::put('/admin/orders/transport/transportAction', 'App\Controller\Admin\OrderController@transportAction');
+
+Route::get('/admin/orders/success', 'App\Controller\Admin\OrderController@success');
+
+
+
+
 
 Route::get('/admin/warehouse', 'App\Controller\Admin\WarehouseController@index');
 Route::get('/admin/warehouse/create', 'App\Controller\Admin\WarehouseController@create');

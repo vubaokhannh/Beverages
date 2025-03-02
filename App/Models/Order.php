@@ -35,6 +35,8 @@ class Order extends BaseModel
         return $this->delete($id);
     }
 
+  
+
     public function getAllOrder_ByStatus($id , $status)
     {
         $result = [];
@@ -59,7 +61,30 @@ class Order extends BaseModel
         }
         return $result;
     }
-
+    public function getAllOrderByStatus( $status)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT * FROM orders WHERE  status = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+    
+            if (!$stmt) {
+                throw new \Exception("Lỗi chuẩn bị truy vấn: " . $conn->error);
+            }
+    
+            $stmt->bind_param('i',  $status);
+            $stmt->execute();
+            $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    
+            $stmt->close();
+            $conn->close();
+    
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
+        }
+        return $result;
+    }
     public function getMaxId()
     {
         $result = 0;
