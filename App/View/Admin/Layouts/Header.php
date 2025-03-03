@@ -9,7 +9,7 @@ class Header extends BaseView
     public static function render($data = null)
     {
         $currentPath = strtok($_SERVER['REQUEST_URI'], '?');
-        $adminOrder = ['/admin/order/delivering', '/admin/products/success'];
+   
 ?>
         <!doctype html>
 
@@ -81,7 +81,7 @@ class Header extends BaseView
                     <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
                         <div class="app-brand demo">
                             <a href="/admin" class="app-brand-link">
-                                <span class="app-brand-logo demo">
+                                <!-- <span class="app-brand-logo demo">
                                     <svg width="25" viewBox="0 0 25 42" version="1.1" xmlns="http://www.w3.org/2000/svg"
                                         xmlns:xlink="http://www.w3.org/1999/xlink">
                                         <defs>
@@ -124,7 +124,7 @@ class Header extends BaseView
                                             </g>
                                         </g>
                                     </svg>
-                                </span>
+                                </span> -->
                                 <span class="app-brand-text demo menu-text fw-bold ms-2">OGANI</span>
                             </a>
 
@@ -140,7 +140,7 @@ class Header extends BaseView
                             <li class="menu-item  <?= $currentPath == '/admin' ? 'active open' : '' ?>">
                                 <a href="/admin" class="menu-link">
                                     <i class="menu-icon tf-icons bx bx-home-smile"></i>
-                                    Dashboard
+                                    Thống kê
                                 </a>
                             </li>
                             <li class="menu-item <?= strpos($currentPath, '/admin/products') === 0 ? 'active open' : '' ?>">

@@ -8,10 +8,13 @@ use App\View\Client\Layouts\Header;
 use App\View\Client\Page\Account\Index;
 use App\View\Client\Page\Account\Order as OrderDetailHis;
 
-
+use App\Helpers\AuthHelper;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\OrderDetail;
+
+use App\Helpers\NotificationHelper;
+use App\View\Client\Components\Notification;
 
 
 const DONHANGCHOXYLY = '0';
@@ -52,14 +55,19 @@ class AccountController
 
     public function order($id)
     {
+        $is_login = AuthHelper::checkLogin();
+        if (!$is_login) {
+            NotificationHelper::error('checkOrder', 'Vui lòng đăng nhập');
 
+            header('location: /');
+        }
         $model = new Order();
         $order = $model->getOneorder($id);
 
         $order_details = new OrderDetail();
 
         $order_details_data = $order_details->getAllOrderDetailByOrderId($order['id']);
-        
+
 
 
         $data = [
